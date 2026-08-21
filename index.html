@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aprende y Crece</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* ===== RESET Y ESTILOS BASE ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: #F5F7FA;
+      color: #2D3748;
+      line-height: 1.6;
+      padding: 0 20px;
+    }
+    a { text-decoration: none; color: inherit; }
+    .app {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      overflow: hidden;
+      padding: 20px 30px 40px;
+    }
+    /* ===== HEADER / NAV ===== */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid #e2e8f0;
+      flex-wrap: wrap;
+    }
+    .logo {
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #4A90D9;
+    }
+    .logo span { color: #FF6B35; }
+    .nav {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .nav a {
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 6px 12px;
+      border-radius: 30px;
+      transition: background 0.2s;
+      color: #2D3748;
+      cursor: pointer;
+    }
+    .nav a:hover, .nav a.active {
+      background: #4A90D9;
+      color: #fff;
+    }
+    /* ===== BANNER ===== */
+    .banner {
+      background: linear-gradient(135deg, #4A90D9 0%, #357ABD 100%);
+      border-radius: 20px;
+      padding: 40px 30px;
+      margin: 24px 0 32px;
+      color: #fff;
+      text-align: center;
+    }
+    .banner h1 {
+      font-family: 'Nunito', sans-serif;
+      font-size: 2.6rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .banner p { font-size: 1.2rem; opacity: 0.9; }
+    /* ===== TARJETAS DE MATERIAS ===== */
+    .subjects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+      margin: 30px 0 40px;
+    }
+    .subject-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      padding: 20px 16px;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid #edf2f7;
+      cursor: pointer;
+    }
+    .subject-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+    .subject-card .icon { font-size: 2.4rem; display: block; margin-bottom: 8px; }
+    .subject-card h3 {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #2D3748;
+    }
+    .subject-card .badge {
+      display: inline-block;
+      background: #e2e8f0;
+      border-radius: 20px;
+      padding: 2px 12px;
+      font-size: 0.75rem;
+      margin-top: 6px;
+      color: #4a5568;
+    }
+    .subject-card.lenguaje .icon { color: #e53e3e; }
+    .subject-card.matematicas .icon { color: #38a169; }
+    .subject-card.ciencias .icon { color: #2b6cb0; }
+    .subject-card.historia .icon { color: #d69e2e; }
+    .subject-card.ingles .icon { color: #805ad5; }
+    /* ===== NOTICIAS ===== */
+    .news {
+      background: #f7fafc;
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin: 24px 0 32px;
+    }
+    .news h2 {
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .news ul { list-style: none; }
+    .news li {
+      padding: 6px 0;
+      border-bottom: 1px solid #edf2f7;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .news li:last-child { border-bottom: none; }
+    .news .date {
+      background: #e2e8f0;
+      border-radius: 20px;
+      padding: 0 12px;
+      font-size: 0.75rem;
+      color: #4a5568;
+      white-space: nowrap;
+    }
+    /* ===== PROGRESO ===== */
+    .progress-summary {
+      background: #fff;
+      border-radius: 16px;
+      border: 1px solid #edf2f7;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+    .progress-summary h2 {
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+    .progress-bar {
+      background: #e2e8f0;
+      border-radius: 30px;
+      height: 12px;
+      overflow: hidden;
+      margin: 8px 0 4px;
+    }
+    .progress-bar .fill {
+      height: 100%;
+      background: #4A90D9;
+      border-radius: 30px;
+      width: 0%;
+      transition: width 0.4s;
+    }
+    .progress-text { font-size: 0.9rem; color: #4a5568; }
+    /* ===== LECCIÓN ===== */
+    .lesson-page {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    .lesson-page.active { display: block; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .lesson-page h2 {
+      font-family: 'Nunito', sans-serif;
+      font-size: 2rem;
+      color: #2D3748;
+      margin: 20px 0 12px;
+    }
+    .lesson-page h3 {
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.4rem;
+      margin: 24px 0 12px;
+      color: #4A90D9;
+    }
+    .lesson-page p { margin: 16px 0; font-size: 1.05rem; }
+    .lesson-page ul, .lesson-page ol { margin: 12px 0 16px 24px; }
+    .lesson-page li { margin: 6px 0; }
+    .img-placeholder {
+      background: #e2e8f0;
+      border-radius: 12px;
+      padding: 30px 20px;
+      text-align: center;
+      color: #4a5568;
+      margin: 20px 0;
+      font-style: italic;
+    }
+    /* ===== QUIZ ===== */
+    .quiz-container {
+      background: #f7fafc;
+      border-radius: 16px;
+      padding: 24px;
+      margin: 30px 0;
+    }
+    .quiz-container .question { font-weight: 600; margin: 16px 0 8px; }
+    .quiz-container .options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 8px 0 16px;
+    }
+    .quiz-container .options button {
+      background: #fff;
+      border: 2px solid #e2e8f0;
+      border-radius: 30px;
+      padding: 10px 22px;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.2s;
+      flex: 1 0 auto;
+      min-width: 120px;
+    }
+    .quiz-container .options button:hover {
+      border-color: #4A90D9;
+      background: #ebf4ff;
+    }
+    .quiz-container .options button.correct {
+      border-color: #38a169;
+      background: #f0fff4;
+      color: #38a169;
+    }
+    .quiz-container .options button.wrong {
+      border-color: #e53e3e;
+      background: #fff5f5;
+      color: #e53e3e;
+    }
+    .feedback {
+      font-weight: 600;
+      margin: 8px 0;
+      padding: 8px 16px;
+      border-radius: 30px;
+      display: inline-block;
+    }
+    .feedback.correct { background: #f0fff4; color: #38a169; }
+    .feedback.wrong { background: #fff5f5; color: #e53e3e; }
+    .score { font-size: 1.2rem; font-weight: 700; margin-top: 16px; }
+    .back-btn {
+      background: #edf2f7;
+      border: none;
+      border-radius: 30px;
+      padding: 10px 24px;
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      margin: 20px 0;
+      transition: background 0.2s;
+    }
+    .back-btn:hover { background: #e2e8f0; }
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .app { padding: 16px; }
+      .header { flex-direction: column; align-items: stretch; gap: 12px; }
+      .nav { justify-content: center; }
+      .banner h1 { font-size: 2rem; }
+      .subjects { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+      .quiz-container .options button { min-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+<div class="app" id="app">
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div class="logo">Aprende y <span>Crece</span></div>
+    <nav class="nav">
+      <a class="active" data-page="home">Inicio</a>
+      <a data-page="lenguaje">Lenguaje</a>
+      <a data-page="matematicas">Matemáticas</a>
+      <a data-page="historia">Historia</a>
+      <a data-page="ingles">Inglés</a>
+    </nav>
+  </header>
+
+  <!-- ===== PÁGINA DE INICIO ===== -->
+  <div id="page-home" class="page">
+    <div class="banner">
+      <h1>📚 Bienvenida a Aprende y Crece</h1>
+      <p>Explora, aprende y diviértete con nuestras lecciones interactivas</p>
+    </div>
+
+    <div class="subjects">
+      <div class="subject-card lenguaje" data-page="lenguaje"><span class="icon">📖</span><h3>Lenguaje</h3><span class="badge">10 cuentos</span></div>
+      <div class="subject-card matematicas" data-page="matematicas"><span class="icon">➗</span><h3>Matemáticas</h3><span class="badge">Juegos + división</span></div>
+      <div class="subject-card historia" data-page="historia"><span class="icon">🏛️</span><h3>Historia</h3><span class="badge">Grecia, Roma, Chile, América</span></div>
+      <div class="subject-card ingles" data-page="ingles"><span class="icon">🌎</span><h3>Inglés</h3><span class="badge">Curso + lecturas</span></div>
+    </div>
+
+    <div class="news">
+      <h2>📰 Novedades</h2>
+      <ul>
+        <li><span class="date">21 Ago</span> Nuevo módulo: Historia de Chile - Pueblos Precolombinos</li>
+        <li><span class="date">20 Ago</span> Juego de multiplicaciones disponible en Matemáticas</li>
+        <li><span class="date">19 Ago</span> 10 cuentos chilenos agregados a Lenguaje</li>
+      </ul>
+    </div>
+
+    <div class="progress-summary">
+      <h2>📊 Tu progreso</h2>
+      <div class="progress-bar"><div class="fill" id="progressFill"></div></div>
+      <div class="progress-text" id="progressText">0% completado</div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ===== MÓDULO: HISTORIA ===== -->
+  <!-- ============================================================ -->
+  <div id="page-historia" class="page lesson-page">
+    <h2>🏛️ Historia y Geografía</h2>
+    <div id="historia-content">
+      <!-- Grecia -->
+      <div class="lesson-item" onclick="showLesson('historia-grecia')">
+        <h3>🏛️ Antigua Grecia</h3>
+        <p>Descubre la cuna de la democracia, los Juegos Olímpicos y la filosofía.</p>
+        <button class="back-btn">Ver lección</button>
+      </div>
+      <!-- Roma -->
+      <div class="lesson-item" onclick="showLesson('historia-roma')">
+        <h3>🏟️ Antigua Roma</h3>
+        <p>Explora el imperio que dominó el Mediterráneo y nos dejó leyes y acueductos.</p>
+        <button class="back-btn">Ver lección</button>
+      </div>
+      <!-- Pueblos Chilenos -->
+      <div class="lesson-item" onclick="showLesson('historia-chile')">
+        <h3>🇨🇱 Pueblos Precolombinos Chilenos</h3>
+        <p>Conoce a los Aymara, Atacameño, Diaguita, Rapa Nui, Mapuche, Kawésqar, Yagán y Selk'nam.</p>
+        <button class="back-btn">Ver lección</button>
+      </div>
+      <!-- Pueblos Americanos -->
+      <div class="lesson-item" onclick="showLesson('historia-america')">
+        <h3>🌎 Pueblos Precolombinos de América</h3>
+        <p>Olmecas, Mayas, Aztecas, Incas, Chavín, Moche, Nazca y Tiwanaku.</p>
+        <button class="back-btn">Ver lección</button>
+      </div>
+    </div>
+    <button class="back-btn" onclick="showPage('home')">← Volver al inicio</button>
+  </div>
+
+  <!-- ===== LECCIÓN: GRECIA ===== -->
+  <div id="lesson-historia-grecia" class="page lesson-page">
+    <h2>🏛️ Antigua Grecia</h2>
+    <p><strong>Ubicación y periodo histórico:</strong> La Antigua Grecia se desarrolló en la península de los Balcanes, rodeada por el mar Egeo y el mar Jónico. Su época de mayor esplendor fue entre los siglos V y IV a.C., cuando sus ciudades-Estado (polis) alcanzaron gran poder y desarrollo cultural.</p>
+    <p><strong>Organización política:</strong> Grecia no fue un país unificado, sino un conjunto de polis independientes. Atenas destacó por su democracia, donde los ciudadanos participaban en las decisiones. Esparta, en cambio, era una sociedad militarista, donde los niños eran entrenados desde pequeños para la guerra.</p>
+    <p><strong>Vida cotidiana:</strong> La alimentación griega se basaba en pan, aceite de oliva y vino. Las viviendas eran sencillas, construidas con adobe y piedra. Los hombres vestían túnicas cortas y las mujeres túnicas largas. La educación era valorada, especialmente en Atenas, donde se enseñaba música, poesía y gimnasia.</p>
+    <p><strong>Mitología:</strong> Los griegos creían en muchos dioses que vivían en el Monte Olimpo. Zeus era el rey de los dioses, Atenea la diosa de la sabiduría, y Poseidón el dios del mar. Dos mitos famosos son el del Caballo de Troya, que permitió a los griegos entrar en la ciudad de Troya, y el de Perséfone, que explica el origen de las estaciones.</p>
+    <p><strong>Aportes y curiosidades:</strong> Los griegos nos legaron los Juegos Olímpicos, el teatro (tragedia y comedia) y la filosofía con pensadores como Sócrates y Platón. También inventaron la democracia. Tres datos sorprendentes: 1) Platón inventó un despertador de agua que tocaba una flauta. 2) En las Olimpiadas antiguas, los ganadores recibían coronas de olivo, no medallas. 3) Los teatros griegos tenían una acústica perfecta, donde se escuchaba hasta una moneda caída.</p>
+    <div class="img-placeholder">[Imagen: Partenón o cerámica griega]</div>
+
+    <div class="quiz-container" id="quiz-grecia">
+      <h3>🧠 Juego: ¿Cuánto sabes de Grecia?</h3>
+      <div id="quiz-grecia-questions"></div>
+      <div id="quiz-grecia-score" class="score"></div>
+    </div>
+    <button class="back-btn" onclick="showPage('historia')">← Volver a Historia</button>
+  </div>
+
+  <!-- ===== LECCIÓN: ROMA ===== -->
+  <div id="lesson-historia-roma" class="page lesson-page">
+    <h2>🏟️ Antigua Roma</h2>
+    <p><strong>Ubicación y expansión:</strong> Roma nació a orillas del río Tíber, en la península Itálica. Con el tiempo, expandió su imperio por todo el Mediterráneo, que llamaron Mare Nostrum ("nuestro mar").</p>
+    <p><strong>Organización social:</strong> La sociedad romana se dividía en patricios (ricos y poderosos), plebeyos (campesinos, artesanos) y esclavos, que no tenían derechos.</p>
+    <p><strong>Vida cotidiana:</strong> Los romanos comían pan, aceitunas y vino. Vestían túnicas y los ciudadanos usaban toga en eventos importantes. Disfrutaban de espectáculos como las luchas de gladiadores en el Coliseo y las carreras de carros en el Circo Máximo.</p>
+    <p><strong>Mitología:</strong> Adoptaron los dioses griegos y les cambiaron el nombre: Zeus se llamó Júpiter y Hera, Juno. La leyenda de Rómulo y Remo, criados por una loba, explica la fundación de Roma.</p>
+    <p><strong>Aportes y curiosidades:</strong> Los romanos nos dejaron el Derecho, los acueductos, las calzadas y el latín, origen del español. Tres datos sorprendentes: 1) Usaban orina para lavar la ropa. 2) Los ricos comían recostados en sillones llamados triclinios. 3) Construyeron más de 50.000 km de caminos.</p>
+    <div class="img-placeholder">[Imagen: Coliseo o acueducto]</div>
+
+    <div class="quiz-container" id="quiz-roma">
+      <h3>🧠 Juego: ¿Cuánto sabes de Roma?</h3>
+      <div id="quiz-roma-questions"></div>
+      <div id="quiz-roma-score" class="score"></div>
+    </div>
+    <button class="back-btn" onclick="showPage('historia')">← Volver a Historia</button>
+  </div>
+
+  <!-- ===== LECCIÓN: PUEBLOS CHILENOS ===== -->
+  <div id="lesson-historia-chile" class="page lesson-page">
+    <h2>🇨🇱 Pueblos Precolombinos Chilenos</h2>
+    <!-- Aymara -->
+    <div class="lesson-item" onclick="showLesson('historia-aymara')">
+      <h3>🏔️ El Pueblo Aymara: Habitantes del Altiplano</h3>
+      <p>Ubicados en el altiplano andino, destacaron por su agricultura en terrazas y su ganadería de llamas y alpacas.</p>
+      <button class="back-btn">Ver lección</button>
+    </div>
+    <!-- Atacameño -->
+    <div class="lesson-item" onclick="showLesson('historia-atacameno')">
+      <h3>🏜️ El Pueblo Atacameño (Likan Antai): Dueños del Desierto</h3>
+      <p>Habitantes del desierto de Atacama, desarrollaron sistemas de riego y comercio con el Imperio Inca.</p>
+      <button class="back-btn">Ver lección</button>
+    </div>
+    <!-- Diaguita -->
+    <div class="lesson-item" onclick="showLesson('historia-diaguita')">
+      <h3>🏺 El Pueblo Diaguita: Alfareros del Norte</h3>
+      <p>Famosos por su cerámica y metalurgia, vivieron en los valles del norte de Chile y resistieron la conquista inca.</p>
+      <button class="back-btn">Ver lección</button>
+    </div>
+    <!-- Rapa Nui -->
+    <div class="lesson-item" onclick="showLesson('historia-rapanui')">
+      <h3>🗿 El Pueblo Rapa Nui: Guardianes del Moái</h3>
+      <p>Habitantes de la Isla de Pascua, conocidos por sus enormes estatuas de piedra (moái) y su cultura única.</p>
+      <button class="back-btn">Ver lección</button>
+    </div>
+    <!-- Mapuche -->
+    <div class="lesson-item" onclick="showLesson('historia-mapuche')">
+      <h3>🌳 El Pueblo Mapuche: Guerreros del Sur</h3>
+      <p>El pueblo más numeroso de Chile, resistió la conquista española por más de 300 años. Su legado incluye la tradición del kultrún y el juego del palín.</p>
+      <button class="back-btn">Ver lección</button>
+    </div>
+    <!-- Kawésqar -->
+    <div class="lesson-item" onclick="showLesson('historia-kawesqar')">
+      <h3>🌊 El Pueblo Kawésqar: Navegantes del Mar Austral</h3>
+      <p>Habitantes de los canales de la Patagonia, eran expertos navegantes y cazadores de lobos marinos.</p>
+      <button class="back-btn">Ver lección</button>
+    </div>
+    <!-- Yagán -->
+    <div class="lesson-item" onclick="showLesson('historia-yagan')">
+      <h3>🔥 El Pueblo Yagán (Yámana): Pescadores del Fin del Mundo</h3>
+      <p>Ubicados en Tierra del Fuego, se protegían del frío con grasa de lobo marino y desarrollaron una canoa única.</p>
+      <button class="back-btn">Ver lección</button>
+    </div>
+    <!-- Selk'nam -->
+    <div class="lesson-item" onclick="showLesson('historia-selknam')">
+      <h3>🏹 El Pueblo Selk'nam (Ona): Cazadores de la Patagonia</h3>
+      <p>Grandes cazadores de guanacos, destacaron por sus pinturas corporales y el rito del Hain.</p>
+      <button class="back-btn">Ver lección</button>
+    </div>
+    <button class="back-btn" onclick="showPage('historia')">← Volver a Historia</button>
+  </div>
+
+  <!-- ===== LECCIONES INDIVIDUALES DE PUEBLOS CHILENOS ===== -->
+  <div id="lesson-historia-aymara" class="page lesson-page">
+    <h2>🏔️ El Pueblo Aymara: Habitantes del Altiplano</h2>
+    <p><strong>Ubicación:</strong> Los aymaras habitaban el altiplano andino, entre el norte de Chile, Bolivia y Perú.</p>
+    <p><strong>Vivienda:</strong> Construían casas de piedra y barro, con techos de paja. Vivían en comunidades llamadas "ayllus".</p>
+    <p><strong>Alimentación:</strong> Cultivaban papa, quinua y maíz en terrazas. Criaban llamas y alpacas.</p>
+    <p><strong>Vestimenta:</strong> Usaban tejidos de lana de alpaca, con colores vivos y diseños geométricos.</p>
+    <p><strong>Organización social:</strong> Eran comunidades agrícolas y ganaderas, con una fuerte organización comunitaria.</p>
+    <p><strong>Legado cultural:</strong> Su idioma (aymara) aún se habla en el norte de Chile. También nos dejaron técnicas de cultivo en terrazas y un rico arte textil.</p>
+    <div class="img-placeholder">[Imagen: Comunidad aymara o tejido tradicional]</div>
+    <div class="quiz-container" id="quiz-aymara"><h3>🧠 Mini Quiz: Pueblo Aymara</h3><div id="quiz-aymara-questions"></div><div id="quiz-aymara-score" class="score"></div></div>
+    <button class="back-btn" onclick="showLesson('historia-chile')">← Volver a Pueblos Chilenos</button>
+  </div>
+
+  <div id="lesson-historia-atacameno" class="page lesson-page">
+    <h2>🏜️ El Pueblo Atacameño (Likan Antai): Dueños del Desierto</h2>
+    <p><strong>Ubicación:</strong> Habitaban el desierto de Atacama, en la región de Antofagasta.</p>
+    <p><strong>Vivienda:</strong> Construían casas de adobe y piedra, agrupadas en pueblos llamados "pukaras".</p>
+    <p><strong>Alimentación:</strong> Cultivaban maíz, papa y quinua usando sistemas de riego. También criaban llamas.</p>
+    <p><strong>Vestimenta:</strong> Usaban túnicas de lana de llama y sombreros de fibra vegetal.</p>
+    <p><strong>Organización social:</strong> Eran comunidades agrícolas, con una fuerte identidad cultural.</p>
+    <p><strong>Legado cultural:</strong> Su técnica de cultivo en terrazas y su cerámica son reconocidas. También destacaron en la metalurgia del cobre.</p>
+    <div class="img-placeholder">[Imagen: Pukará o cerámica atacameña]</div>
+    <div class="quiz-container" id="quiz-atacameno"><h3>🧠 Mini Quiz: Pueblo Atacameño</h3><div id="quiz-atacameno-questions"></div><div id="quiz-atacameno-score" class="score"></div></div>
+    <button class="back-btn" onclick="showLesson('historia-chile')">← Volver a Pueblos Chilenos</button>
+  </div>
+
+  <!-- ===== LECCIÓN: PUEBLOS AMERICANOS ===== -->
+  <div id="lesson-historia-america" class="page lesson-page">
+    <h2>🌎 Pueblos Precolombinos de América</h2>
+    <div class="lesson-item" onclick="showLesson('historia-olmecas')"><h3>🗿 Los Olmecas: Cultura Madre de Mesoamérica</h3><button class="back-btn">Ver lección</button></div>
+    <div class="lesson-item" onclick="showLesson('historia-mayas')"><h3>🌽 Los Mayas: Señores del Maíz y el Tiempo</h3><button class="back-btn">Ver lección</button></div>
+    <div class="lesson-item" onclick="showLesson('historia-aztecas')"><h3>🦅 Los Aztecas (Mexicas): Guerreros del Sol</h3><button class="back-btn">Ver lección</button></div>
+    <div class="lesson-item" onclick="showLesson('historia-incas')"><h3>⛰️ Los Incas (Quechuas): Hijos del Sol</h3><button class="back-btn">Ver lección</button></div>
+    <div class="lesson-item" onclick="showLesson('historia-chavin')"><h3>🪷 La Cultura Chavín: El Origen Andino</h3><button class="back-btn">Ver lección</button></div>
+    <div class="lesson-item" onclick="showLesson('historia-moche')"><h3>🏺 La Cultura Moche: Ceramistas del Norte</h3><button class="back-btn">Ver lección</button></div>
+    <div class="lesson-item" onclick="showLesson('historia-nazca')"><h3>✈️ La Cultura Nazca: Líneas en el Desierto</h3><button class="back-btn">Ver lección</button></div>
+    <div class="lesson-item" onclick="showLesson('historia-tiwanaku')"><h3>🏛️ La Cultura Tiwanaku: El Imperio del Lago</h3><button class="back-btn">Ver lección</button></div>
+    <button class="back-btn" onclick="showPage('historia')">← Volver a Historia</button>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ===== MÓDULO: MATEMÁTICAS ===== -->
+  <!-- ============================================================ -->
+  <div id="page-matematicas" class="page lesson-page">
+    <h2>➗ Matemáticas</h2>
+    <div class="lesson-item" onclick="showLesson('matematicas-multiplicacion')">
+      <h3>🧮 Juego: Problemas de Multiplicación</h3>
+      <p>Practica con 15 problemas divertidos. ¡Escribe la respuesta y verifica!</p>
+      <button class="back-btn">Ver juego</button>
+    </div>
+    <div class="lesson-item" onclick="showLesson('matematicas-division')">
+      <h3>📊 La División: Repartir y Compartir</h3>
+      <p>Aprende qué es la división, sus partes y practica con ejercicios interactivos.</p>
+      <button class="back-btn">Ver lección</button>
+    </div>
+    <button class="back-btn" onclick="showPage('home')">← Volver al inicio</button>
+  </div>
+
+  <!-- ===== JUEGO: MULTIPLICACIÓN ===== -->
+  <div id="lesson-matematicas-multiplicacion" class="page lesson-page">
+    <h2>🧮 Juego: Problemas de Multiplicación</h2>
+    <div id="multiplicacion-container">
+      <p><strong>Problema <span id="multi-index">1</span>/15:</strong></p>
+      <p id="multi-enunciado">Cargando...</p>
+      <input type="text" id="multi-respuesta" placeholder="Escribe tu respuesta">
+      <button onclick="verificarMultiplicacion()">Comprobar</button>
+      <div id="multi-feedback"></div>
+      <div id="multi-solucion"></div>
+      <button onclick="siguienteMultiplicacion()">Siguiente →</button>
+      <div id="multi-score" class="score"></div>
+    </div>
+    <button class="back-btn" onclick="showPage('matematicas')">← Volver a Matemáticas</button>
+  </div>
+
+  <!-- ===== LECCIÓN: DIVISIÓN ===== -->
+  <div id="lesson-matematicas-division" class="page lesson-page">
+    <h2>📊 La División: Repartir y Compartir</h2>
+    <p><strong>¿Qué es la división?</strong> Es repartir una cantidad en partes iguales. Por ejemplo, si tienes 12 galletas y las repartes entre 4 amigos, cada uno recibe 3 galletas. ¡Eso es dividir!</p>
+    <p><strong>Partes de la división:</strong> Dividendo (lo que repartes), divisor (entre cuántos), cociente (lo que toca a cada uno) y resto (lo que sobra).</p>
+    <p>Ejemplo: 12 ÷ 4 = 3. Dividendo=12, divisor=4, cociente=3, resto=0.</p>
+    <div class="img-placeholder">[Imagen: Reparto de galletas o pizzas]</div>
+    <h3>✏️ Ejercicios básicos</h3>
+    <div id="division-ejercicios"></div>
+    <h3>🧠 Ejercicios con enunciado</h3>
+    <div id="division-enunciados"></div>
+    <button class="back-btn" onclick="showPage('matematicas')">← Volver a Matemáticas</button>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ===== MÓDULO: LENGUAJE ===== -->
+  <!-- ============================================================ -->
+  <div id="page-lenguaje" class="page lesson-page">
+    <h2>📖 Lenguaje</h2>
+    <p>Descubre 10 cuentos de escritores chilenos, ordenados de menor a mayor dificultad.</p>
+    <div id="lenguaje-lista"></div>
+    <button class="back-btn" onclick="showPage('home')">← Volver al inicio</button>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ===== MÓDULO: INGLÉS ===== -->
+  <!-- ============================================================ -->
+  <div id="page-ingles" class="page lesson-page">
+    <h2>🌎 Inglés</h2>
+    <div class="lesson-item" onclick="showLesson('ingles-curso')">
+      <h3>📘 Curso Básico de Inglés</h3>
+      <p>Aprende vocabulario, saludos, pronombres y verbos básicos.</p>
+      <button class="back-btn">Ver curso</button>
+    </div>
+    <div class="lesson-item" onclick="showLesson('ingles-lecturas')">
+      <h3>📖 Lecturas de Comprensión</h3>
+      <p>5 lecturas cortas con preguntas para practicar tu inglés.</p>
+      <button class="back-btn">Ver lecturas</button>
+    </div>
+    <button class="back-btn" onclick="showPage('home')">← Volver al inicio</button>
+  </div>
+
+  <!-- ===== CURSO DE INGLÉS ===== -->
+  <div id="lesson-ingles-curso" class="page lesson-page">
+    <h2>📘 Curso Básico de Inglés</h2>
+    <p><strong>Unit 1 - Lesson 1: Hello! Introductions</strong></p>
+    <p><strong>Vocabulario:</strong> Hello, Goodbye, How are you?, I'm fine, Thank you.</p>
+    <p><strong>Gramática:</strong> El verbo "to be" (ser/estar) - I am, you are, he/she/it is, we are, they are.</p>
+    <div class="quiz-container" id="ingles-quiz1"><h3>🧠 Mini Quiz</h3><div id="ingles-quiz1-questions"></div><div id="ingles-quiz1-score" class="score"></div></div>
+    <p><strong>Unit 2 - Lesson 1: My Family</strong></p>
+    <p><strong>Vocabulario:</strong> Mother, father, sister, brother, grandmother, grandfather.</p>
+    <p><strong>Gramática:</strong> Pronombres personales (I, you, he, she, it, we, they) con el verbo "to have" (tener).</p>
+    <div class="quiz-container" id="ingles-quiz2"><h3>🧠 Mini Quiz</h3><div id="ingles-quiz2-questions"></div><div id="ingles-quiz2-score" class="score"></div></div>
+    <button class="back-btn" onclick="showPage('ingles')">← Volver a Inglés</button>
+  </div>
+
+  <!-- ===== LECTURAS DE INGLÉS ===== -->
+  <div id="lesson-ingles-lecturas" class="page lesson-page">
+    <h2>📖 Lecturas de Comprensión en Inglés</h2>
+    <div class="lesson-item" onclick="showLesson('ingles-reading1')"><h3>🐶 My Pet</h3><button class="back-btn">Ver lectura</button></div>
+    <div class="lesson-item" onclick="showLesson('ingles-reading2')"><h3>🏡 My Family</h3><button class="back-btn">Ver lectura</button></div>
+    <div class="lesson-item" onclick="showLesson('ingles-reading3')"><h3>🎒 My School</h3><button class="back-btn">Ver lectura</button></div>
+    <div class="lesson-item" onclick="showLesson('ingles-reading4')"><h3>☀️ My Vacation</h3><button class="back-btn">Ver lectura</button></div>
+    <div class="lesson-item" onclick="showLesson('ingles-reading5')"><h3>🍕 My Favorite Food</h3><button class="back-btn">Ver lectura</button></div>
+    <button class="back-btn" onclick="showPage('ingles')">← Volver a Inglés</button>
+  </div>
+
+  <!-- ===== LECTURA 1 ===== -->
+  <div id="lesson-ingles-reading1" class="page lesson-page">
+    <h2>🐶 My Pet</h2>
+    <p>I have a pet dog. His name is Max. Max is brown and white. He is very friendly. He likes to play with a ball. Every day, I walk Max in the park. He runs fast and has fun. I love my dog.</p>
+    <div class="quiz-container" id="reading1-quiz"><h3>🧠 Comprehension Quiz</h3><div id="reading1-questions"></div><div id="reading1-score" class="score"></div></div>
+    <button class="back-btn" onclick="showLesson('ingles-lecturas')">← Volver a lecturas</button>
+  </div>
+  <!-- ===== LECTURA 2 ===== -->
+  <div id="lesson-ingles-reading2" class="page lesson-page">
+    <h2>🏡 My Family</h2>
+    <p>My family is small. There are four people: my father, my mother, my sister and me. My father is a doctor. My mother is a teacher. My sister is a student. We live in a house. We are happy.</p>
+    <div class="quiz-container" id="reading2-quiz"><h3>🧠 Comprehension Quiz</h3><div id="reading2-questions"></div><div id="reading2-score" class="score"></div></div>
+    <button class="back-btn" onclick="showLesson('ingles-lecturas')">← Volver a lecturas</button>
+  </div>
+  <!-- ===== LECTURA 3 ===== -->
+  <div id="lesson-ingles-reading3" class="page lesson-page">
+    <h2>🎒 My School</h2>
+    <p>My school is big and beautiful. It has a library, a garden and a playground. I have many friends. My teacher is very kind. I like to learn English and math. School is fun.</p>
+    <div class="quiz-container" id="reading3-quiz"><h3>🧠 Comprehension Quiz</h3><div id="reading3-questions"></div><div id="reading3-score" class="score"></div></div>
+    <button class="back-btn" onclick="showLesson('ingles-lecturas')">← Volver a lecturas</button>
+  </div>
+  <!-- ===== LECTURA 4 ===== -->
+  <div id="lesson-ingles-reading4" class="page lesson-page">
+    <h2>☀️ My Vacation</h2>
+    <p>Last summer, I visited the beach. It was sunny and warm. I swam in the sea, built sandcastles and collected shells. I ate ice cream every day. I had a wonderful vacation!</p>
+    <div class="quiz-container" id="reading4-quiz"><h3>🧠 Comprehension Quiz</h3><div id="reading4-questions"></div><div id="reading4-score" class="score"></div></div>
+    <button class="back-btn" onclick="showLesson('ingles-lecturas')">← Volver a lecturas</button>
+  </div>
+  <!-- ===== LECTURA 5 ===== -->
+  <div id="lesson-ingles-reading5" class="page lesson-page">
+    <h2>🍕 My Favorite Food</h2>
+    <p>I love pizza. It is delicious and fun. Pizza has bread, tomato sauce and cheese. My favorite pizza has pepperoni and mushrooms. I like pizza with a cold soda. Pizza is the best food!</p>
+    <div class="quiz-container" id="reading5-quiz"><h3>🧠 Comprehension Quiz</h3><div id="reading5-questions"></div><div id="reading5-score" class="score"></div></div>
+    <button class="back-btn" onclick="showLesson('ingles-lecturas')">← Volver a lecturas</button>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ===== LECCIONES: PUEBLOS AMERICANOS ===== -->
+  <!-- ============================================================ -->
+  <div id="lesson-historia-olmecas" class="page lesson-page">
+    <h2>🗿 Los Olmecas: Cultura Madre de Mesoamérica</h2>
+    <p><strong>Ubicación:</strong> Habitaron la costa del Golfo de México (actuales Veracruz y Tabasco) entre 1200 y 400 a.C.</p>
+    <p><strong>Logros culturales:</strong> Son conocidos por sus colosales cabezas de piedra, que representaban a sus gobernantes. Desarrollaron un calendario y una escritura jeroglífica temprana.</p>
+    <p><strong>Organización social:</strong> Eran una sociedad jerárquica con gobernantes y sacerdotes que controlaban el comercio y la religión.</p>
+    <p><strong>Religión:</strong> Adoraban a dioses como el Jaguar y la Serpiente Emplumada, que luego influyeron en otras culturas mesoamericanas.</p>
+    <div class="img-placeholder">[Imagen: Cabeza olmeca o jadeíta]</div>
+    <div class="quiz-container" id="quiz-olmecas"><h3>🧠 Mini Quiz: Olmecas</h3><div id="quiz-olmecas-questions"></div><div id="quiz-olmecas-score" class="score"></div></div>
+    <button class="back-btn" onclick="showLesson('historia-america')">← Volver a Pueblos de América</button>
+  </div>
+
+  <!-- ===== SCRIPT ===== -->
+  <script>
+    // ============================================================
+    // 1. SISTEMA DE NAVEGACIÓN
+    // ============================================================
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      const page = document.getElementById('page-' + pageId);
+      if (page) page.classList.add('active');
+      document.querySelectorAll('.nav a').forEach(a => a.classList.remove('active'));
+      document.querySelector(`.nav a[data-page="${pageId}"]`)?.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      actualizarProgreso();
+    }
+
+    function showLesson(lessonId) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      const lesson = document.getElementById('lesson-' + lessonId);
+      if (lesson) lesson.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (lessonId.startsWith('historia-')) {
+        if (lessonId.includes('grecia')) inicializarQuiz('grecia');
+        else if (lessonId.includes('roma')) inicializarQuiz('roma');
+        else if (lessonId.includes('aymara')) inicializarQuiz('aymara');
+        else if (lessonId.includes('atacameno')) inicializarQuiz('atacameno');
+        else if (lessonId.includes('olmecas')) inicializarQuiz('olmecas');
+      }
+      if (lessonId === 'matematicas-multiplicacion') inicializarMultiplicacion();
+      if (lessonId === 'matematicas-division') inicializarDivision();
+      if (lessonId === 'ingles-curso') { inicializarQuizIngles('ingles-quiz1'); inicializarQuizIngles('ingles-quiz2'); }
+      if (lessonId.startsWith('ingles-reading')) inicializarReadingQuiz(lessonId.replace('ingles-reading', ''));
+      actualizarProgreso();
+    }
+
+    // ============================================================
+    // 2. PROGRESO CON LOCALSTORAGE
+    // ============================================================
+    function getProgress() {
+      return JSON.parse(localStorage.getItem('aprendeProgreso')) || {};
+    }
+
+    function saveProgress(data) {
+      localStorage.setItem('aprendeProgreso', JSON.stringify(data));
+      actualizarProgreso();
+    }
+
+    function marcarCompletado(leccion, score) {
+      let prog = getProgress();
+      if (!prog[leccion]) prog[leccion] = { completado: false, score: 0 };
+      prog[leccion].completado = true;
+      prog[leccion].score = Math.max(prog[leccion].score, score || 0);
+      saveProgress(prog);
+    }
+
+    function actualizarProgreso() {
+      const prog = getProgress();
+      const total = document.querySelectorAll('.lesson-item, .quiz-container').length || 1;
+      const completados = Object.values(prog).filter(p => p.completado).length;
+      const pct = Math.round((completados / total) * 100);
+      document.getElementById('progressFill').style.width = pct + '%';
+      document.getElementById('progressText').textContent = pct + '% completado';
+    }
+
+    // ============================================================
+    // 3. QUIZ GENÉRICO
+    // ============================================================
+    function inicializarQuiz(tema) {
+      const preguntas = window['preguntas_' + tema] || [];
+      if (!preguntas.length) return;
+      const container = document.getElementById('quiz-' + tema + '-questions');
+      const scoreDiv = document.getElementById('quiz-' + tema + '-score');
+      if (!container) return;
+
+      let idx = 0, correctas = 0;
+      container.innerHTML = '';
+      scoreDiv.textContent = '';
+
+      function mostrarPregunta() {
+        if (idx >= preguntas.length) {
+          const total = preguntas.length;
+          const pct = Math.round((correctas / total) * 100);
+          let msg = pct >= 80 ? '🌟 ¡Excelente!' : pct >= 50 ? '😊 ¡Bien hecho!' : '📚 ¡Sigue practicando!';
+          scoreDiv.innerHTML = `Puntaje final: ${correctas}/${total} (${pct}%) - ${msg}`;
+          marcarCompletado(tema, correctas);
+          return;
+        }
+        const q = preguntas[idx];
+        let html = `<div class="question">${idx+1}. ${q.pregunta}</div><div class="options">`;
+        q.opciones.forEach((op, i) => {
+          html += `<button onclick="responderQuiz('${tema}', ${idx}, ${i})">${op}</button>`;
+        });
+        html += `</div><div id="feedback-${tema}-${idx}" class="feedback"></div>`;
+        container.innerHTML = html;
+      }
+
+      window['responderQuiz_' + tema] = function(indice, seleccion) {
+        const q = preguntas[indice];
+        const botones = container.querySelectorAll('.options button');
+        botones.forEach((btn, i) => {
+          btn.disabled = true;
+          if (i === q.correcta) btn.classList.add('correct');
+          else if (i === seleccion && i !== q.correcta) btn.classList.add('wrong');
+        });
+        const fb = document.getElementById('feedback-' + tema + '-' + indice);
+        if (seleccion === q.correcta) {
+          fb.textContent = '✅ Correcto!';
+          fb.className = 'feedback correct';
+          correctas++;
+        } else {
+          fb.textContent = '❌ Incorrecto. La respuesta correcta era: ' + q.opciones[q.correcta];
+          fb.className = 'feedback wrong';
+        }
+        idx++;
+        setTimeout(mostrarPregunta, 1500);
+      };
+
+      window.responderQuiz = function(tema, indice, seleccion) {
+        if (window['responderQuiz_' + tema]) {
+          window['responderQuiz_' + tema](indice, seleccion);
+        }
+      };
+
+      mostrarPregunta();
+    }
+
+    function inicializarQuizIngles(containerId) {
+      const tema = containerId;
+      const preguntas = window['preguntas_' + tema] || [];
+      if (!preguntas.length) return;
+      const container = document.getElementById(containerId + '-questions');
+      const scoreDiv = document.getElementById(containerId + '-score');
+      if (!container) return;
+
+      let idx = 0, correctas = 0;
+
+      function mostrarPregunta() {
+        if (idx >= preguntas.length) {
+          const total = preguntas.length;
+          const pct = Math.round((correctas / total) * 100);
+          let msg = pct >= 80 ? '🌟 ¡Excelente!' : pct >= 50 ? '😊 ¡Bien hecho!' : '📚 ¡Sigue practicando!';
+          scoreDiv.innerHTML = `Puntaje final: ${correctas}/${total} (${pct}%) - ${msg}`;
+          marcarCompletado(tema, correctas);
+          return;
+        }
+        const q = preguntas[idx];
+        let html = `<div class="question">${idx+1}. ${q.pregunta}</div><div class="options">`;
+        q.opciones.forEach((op, i) => {
+          html += `<button onclick="responderQuizIngles('${tema}', ${idx}, ${i})">${op}</button>`;
+        });
+        html += `</div><div id="feedback-${tema}-${idx}" class="feedback"></div>`;
+        container.innerHTML = html;
+      }
+
+      window['responderQuizIngles_' + tema] = function(indice, seleccion) {
+        const q = preguntas[indice];
+        const botones = container.querySelectorAll('.options button');
+        botones.forEach((btn, i) => {
+          btn.disabled = true;
+          if (i === q.correcta) btn.classList.add('correct');
+          else if (i === seleccion && i !== q.correcta) btn.classList.add('wrong');
+        });
+        const fb = document.getElementById('feedback-' + tema + '-' + indice);
+        if (seleccion === q.correcta) {
+          fb.textContent = '✅ Correcto!';
+          fb.className = 'feedback correct';
+          correctas++;
+        } else {
+          fb.textContent = '❌ Incorrecto. La respuesta correcta era: ' + q.opciones[q.correcta];
+          fb.className = 'feedback wrong';
+        }
+        idx++;
+        setTimeout(mostrarPregunta, 1500);
+      };
+
+      window.responderQuizIngles = function(tema, indice, seleccion) {
+        if (window['responderQuizIngles_' + tema]) {
+          window['responderQuizIngles_' + tema](indice, seleccion);
+        }
+      };
+
+      mostrarPregunta();
+    }
+
+    function inicializarReadingQuiz(num) {
+      const tema = 'reading' + num;
+      const preguntas = window['preguntas_' + tema] || [];
+      if (!preguntas.length) return;
+      const container = document.getElementById(tema + '-questions');
+      const scoreDiv = document.getElementById(tema + '-score');
+      if (!container) return;
+
+      let idx = 0, correctas = 0;
+
+      function mostrarPregunta() {
+        if (idx >= preguntas.length) {
+          const total = preguntas.length;
+          const pct = Math.round((correctas / total) * 100);
+          let msg = pct >= 80 ? '🌟 ¡Excelente!' : pct >= 50 ? '😊 ¡Bien hecho!' : '📚 ¡Sigue practicando!';
+          scoreDiv.innerHTML = `Puntaje final: ${correctas}/${total} (${pct}%) - ${msg}`;
+          marcarCompletado(tema, correctas);
+          return;
+        }
+        const q = preguntas[idx];
+        let html = `<div class="question">${idx+1}. ${q.pregunta}</div><div class="options">`;
+        q.opciones.forEach((op, i) => {
+          html += `<button onclick="responderReadingQuiz('${tema}', ${idx}, ${i})">${op}</button>`;
+        });
+        html += `</div><div id="feedback-${tema}-${idx}" class="feedback"></div>`;
+        container.innerHTML = html;
+      }
+
+      window['responderReadingQuiz_' + tema] = function(indice, seleccion) {
+        const q = preguntas[indice];
+        const botones = container.querySelectorAll('.options button');
+        botones.forEach((btn, i) => {
+          btn.disabled = true;
+          if (i === q.correcta) btn.classList.add('correct');
+          else if (i === seleccion && i !== q.correcta) btn.classList.add('wrong');
+        });
+        const fb = document.getElementById('feedback-' + tema + '-' + indice);
+        if (seleccion === q.correcta) {
+          fb.textContent = '✅ Correcto!';
+          fb.className = 'feedback correct';
+          correctas++;
+        } else {
+          fb.textContent = '❌ Incorrecto. La respuesta correcta era: ' + q.opciones[q.correcta];
+          fb.className = 'feedback wrong';
+        }
+        idx++;
+        setTimeout(mostrarPregunta, 1500);
+      };
+
+      window.responderReadingQuiz = function(tema, indice, seleccion) {
+        if (window['responderReadingQuiz_' + tema]) {
+          window['responderReadingQuiz_' + tema](indice, seleccion);
+        }
+      };
+
+      mostrarPregunta();
+    }
+
+    // ============================================================
+    // 4. DATOS DE PREGUNTAS (ejemplos)
+    // ============================================================
+    window.preguntas_grecia = [
+      { pregunta: "¿Dónde se ubicaba la Antigua Grecia?", opciones: ["Península Itálica", "Península de los Balcanes", "Isla de Creta", "Norte de África"], correcta: 1 },
+      { pregunta: "¿Qué tipo de gobierno nació en Atenas?", opciones: ["Monarquía", "Democracia", "Oligarquía", "Tiranía"], correcta: 1 },
+      { pregunta: "¿Quién era el rey de los dioses griegos?", opciones: ["Poseidón", "Hades", "Zeus", "Atenea"], correcta: 2 },
+      { pregunta: "¿Qué animal de madera usaron los griegos para entrar en Troya?", opciones: ["León", "Elefante", "Caballo", "Toro"], correcta: 2 },
+      { pregunta: "¿Qué inventó Platón para despertar a sus alumnos?", opciones: ["Reloj de arena", "Despertador de agua", "Campana", "Gallo mecánico"], correcta: 1 },
+      { pregunta: "¿Qué recibían los ganadores de las Olimpiadas antiguas?", opciones: ["Medallas de oro", "Coronas de olivo", "Monedas", "Trofeos"], correcta: 1 },
+      { pregunta: "¿Qué diosa representaba la sabiduría?", opciones: ["Perséfone", "Deméter", "Atenea", "Hera"], correcta: 2 },
+      { pregunta: "¿Qué guerra enfrentó a Atenas y Esparta?", opciones: ["Guerra de Troya", "Guerra Médica", "Guerra del Peloponeso", "Guerra de las Galaxias"], correcta: 2 },
+      { pregunta: "¿Qué cultivos eran principales en Grecia?", opciones: ["Maíz y papas", "Olivos y vides", "Arroz y trigo", "Cacao y café"], correcta: 1 },
+      { pregunta: "¿Quién fue un filósofo griego importante?", opciones: ["Zeus", "Sócrates", "Perséfone", "Atenea"], correcta: 1 }
+    ];
+
+    window.preguntas_roma = [
+      { pregunta: "¿A orillas de qué río nació Roma?", opciones: ["Río Egeo", "Río Tíber", "Río Nilo", "Río Amazonas"], correcta: 1 },
+      { pregunta: "¿Cómo llamaban los romanos al Mediterráneo?", opciones: ["Mare Nostrum", "Mar Grande", "Océano Itálico", "Mar de los Patricios"], correcta: 0 },
+      { pregunta: "¿Qué grupo social era el más poderoso en Roma?", opciones: ["Plebeyos", "Esclavos", "Patricios", "Gladiadores"], correcta: 2 },
+      { pregunta: "¿Qué idioma hablaban los romanos?", opciones: ["Griego", "Español", "Latín", "Italiano"], correcta: 2 },
+      { pregunta: "¿Para qué se usaba el Coliseo?", opciones: ["Carreras de carros", "Luchas de gladiadores", "Lavar ropa", "Cultivar olivos"], correcta: 1 },
+      { pregunta: "¿Cómo llamaron los romanos a Zeus?", opciones: ["Juno", "Marte", "Júpiter", "Neptuno"], correcta: 2 },
+      { pregunta: "¿Qué aporte romano buscaba justicia igual para todos?", opciones: ["Acueductos", "El Derecho", "Hormigón", "Calzadas"], correcta: 1 },
+      { pregunta: "¿Qué usaban los romanos para lavar la ropa?", opciones: ["Jabón", "Orina", "Aceite", "Agua bendita"], correcta: 1 },
+      { pregunta: "¿Qué era la toga?", opciones: ["Una moneda", "Una prenda de lana", "Un arma", "Un sillón"], correcta: 1 },
+      { pregunta: "¿Cómo comían los romanos ricos?", opciones: ["Sentados", "De pie", "Recostados", "Bailando"], correcta: 2 }
+    ];
+
+    window.preguntas_aymara = [
+      { pregunta: "¿Dónde habitaban los aymaras?", opciones: ["Desierto de Atacama", "Altiplano andino", "Patagonia", "Isla de Pascua"], correcta: 1 },
+      { pregunta: "¿Qué animal criaban los aymaras?", opciones: ["Vacas", "Llamas", "Caballos", "Cerdos"], correcta: 1 },
+      { pregunta: "¿Qué cultivaban los aymaras?", opciones: ["Papa, quinua y maíz", "Trigo y cebada", "Arroz y caña", "Café y cacao"], correcta: 0 },
+      { pregunta: "¿Cómo se llamaba la comunidad aymara?", opciones: ["Ayllu", "Pukará", "Cacicazgo", "Señorío"], correcta: 0 },
+      { pregunta: "¿Qué tejían los aymaras?", opciones: ["Lana de alpaca", "Algodón", "Seda", "Cuero"], correcta: 0 }
+    ];
+
+    window.preguntas_atacameno = [
+      { pregunta: "¿Dónde vivían los atacameños?", opciones: ["Desierto de Atacama", "Altos Andes", "Patagonia", "Valle Central"], correcta: 0 },
+      { pregunta: "¿Qué desarrollaron para cultivar en el desierto?", opciones: ["Terrazas", "Sistemas de riego", "Chinampas", "Canales"], correcta: 1 },
+      { pregunta: "¿Qué metal trabajaban los atacameños?", opciones: ["Oro", "Plata", "Cobre", "Hierro"], correcta: 2 },
+      { pregunta: "¿Cómo se llamaban sus pueblos fortificados?", opciones: ["Ayllus", "Pukarás", "Ciudades", "Aldeas"], correcta: 1 },
+      { pregunta: "¿Con qué imperio comerciaban?", opciones: ["Inca", "Azteca", "Maya", "Chavín"], correcta: 0 }
+    ];
+
+    window.preguntas_olmecas = [
+      { pregunta: "¿Dónde se ubicaron los olmecas?", opciones: ["México", "Perú", "Guatemala", "Ecuador"], correcta: 0 },
+      { pregunta: "¿Qué esculturas famosas crearon?", opciones: ["Cabezas colosales", "Estatuas de jade", "Pirámides", "Líneas en el desierto"], correcta: 0 },
+      { pregunta: "¿Qué representaban las cabezas colosales?", opciones: ["Dioses", "Gobernantes", "Animales", "Astros"], correcta: 1 },
+      { pregunta: "¿Qué dios influyó en otras culturas?", opciones: ["Jaguar", "Quetzalcóatl", "Tlaloc", "Coatlicue"], correcta: 0 },
+      { pregunta: "¿Qué desarrollaron los olmecas?", opciones: ["Calendario y escritura", "Pirámides", "Filosofía", "Monedas"], correcta: 0 }
+    ];
+
+    // ============================================================
+    // 5. JUEGO DE MULTIPLICACIÓN
+    // ============================================================
+    const problemas = [
+      {enunciado:"A $6 cada lápiz, ¿cuánto importarán 7 docenas?", respuesta:"504"},
+      {enunciado:"Enrique vende un terreno de 14 áreas a $50,000 el área... ¿Cuánto se le adeuda?", respuesta:"460000"},
+      {enunciado:"Se compran 8 libros a $20... ¿cuánto se pierde?", respuesta:"150"},
+      {enunciado:"Se compran 216 docenas de lapiceros a $50 la docena... ¿beneficio?", respuesta:"2160"},
+      {enunciado:"Se compran 84 m² de terreno a $30 el m²... ¿Cuánto se gana?", respuesta:"1680"},
+      {enunciado:"Se compran 40 lápices por $20... ¿Cuánto se ganará?", respuesta:"4"},
+      {enunciado:"Auto sale a 60 km/h y otro a 70... ¿a qué distancia se hallarán?", respuesta:"390"},
+      {enunciado:"Dos autos salen a 720 km... ¿a qué distancia se encontrarán?", respuesta:"510"},
+      {enunciado:"Compré 14 trajes, 22 sombreros y 8 bastones... ¿ganó o perdió?", respuesta:"10200"},
+      {enunciado:"Compré 115 caballos... ¿Gané o perdí?", respuesta:"-5000"},
+      {enunciado:"Albañil que hace 6 m² de pared... ¿cuánto debe recibir?", respuesta:"2880"},
+      {enunciado:"Juan gana $60 por día... ¿cuánto ahorra en 8 semanas?", respuesta:"720"},
+      {enunciado:"Se han vendido 14 barriles... ¿costo total?", respuesta:"4660"},
+      {enunciado:"Pedro tiene $65... ¿capital común que queda?", respuesta:"252"},
+      {enunciado:"Ganadero compró 80 cabezas... ¿cuánto debe obtener?", respuesta:"105000"}
+    ];
+    let idxMulti = 0, correctasMulti = 0, totalMulti = problemas.length;
+
+    function inicializarMultiplicacion() {
+      idxMulti = 0; correctasMulti = 0;
+      mostrarMulti();
+    }
+
+    function mostrarMulti() {
+      if (idxMulti >= totalMulti) {
+        const pct = Math.round((correctasMulti / totalMulti) * 100);
+        let msg = pct >= 80 ? '🌟 ¡Excelente!' : pct >= 50 ? '😊 ¡Bien hecho!' : '📚 ¡Sigue practicando!';
+        document.getElementById('multi-enunciado').textContent = '¡Juego terminado!';
+        document.getElementById('multi-score').textContent = `Puntaje final: ${correctasMulti}/${totalMulti} (${pct}%) - ${msg}`;
+        document.getElementById('multi-respuesta').style.display = 'none';
+        document.querySelector('#multiplicacion-container button:not(.back-btn)').style.display = 'none';
+        marcarCompletado('multiplicacion', correctasMulti);
+        return;
+      }
+      document.getElementById('multi-index').textContent = idxMulti + 1;
+      document.getElementById('multi-enunciado').textContent = problemas[idxMulti].enunciado;
+      document.getElementById('multi-respuesta').value = '';
+      document.getElementById('multi-feedback').textContent = '';
+      document.getElementById('multi-solucion').textContent = '';
+      document.getElementById('multi-score').textContent = '';
+      document.getElementById('multi-respuesta').style.display = 'inline-block';
+      document.querySelector('#multiplicacion-container button:not(.back-btn)').style.display = 'inline-block';
+    }
+
+    function verificarMultiplicacion() {
+      const respuesta = document.getElementById('multi-respuesta').value.trim();
+      const correcta = problemas[idxMulti].respuesta;
+      const fb = document.getElementById('multi-feedback');
+      const sol = document.getElementById('multi-solucion');
+      if (respuesta === correcta) {
+        fb.textContent = '✅ Correcto!';
+        fb.className = 'feedback correct';
+        correctasMulti++;
+        sol.textContent = 'Respuesta correcta: ' + correcta;
+      } else {
+        fb.textContent = '❌ Incorrecto.';
+        fb.className = 'feedback wrong';
+        sol.textContent = 'Respuesta correcta: ' + correcta;
+      }
+      document.getElementById('multi-respuesta').disabled = true;
+      document.querySelector('#multiplicacion-container button:not(.back-btn)').disabled = true;
+    }
+
+    function siguienteMultiplicacion() {
+      idxMulti++;
+      document.getElementById('multi-respuesta').disabled = false;
+      document.querySelector('#multiplicacion-container button:not(.back-btn)').disabled = false;
+      mostrarMulti();
+    }
+
+    // ============================================================
+    // 6. DIVISIÓN
+    // ============================================================
+    function inicializarDivision() {
+      const ejercicios = [
+        {pregunta:"12 ÷ 3 = ?", respuesta:"4"},
+        {pregunta:"15 ÷ 5 = ?", respuesta:"3"},
+        {pregunta:"20 ÷ 4 = ?", respuesta:"5"},
+        {pregunta:"24 ÷ 6 = ?", respuesta:"4"},
+        {pregunta:"30 ÷ 5 = ?", respuesta:"6"},
+        {pregunta:"36 ÷ 4 = ?", respuesta:"9"},
+        {pregunta:"42 ÷ 7 = ?", respuesta:"6"},
+        {pregunta:"48 ÷ 8 = ?", respuesta:"6"},
+        {pregunta:"56 ÷ 7 = ?", respuesta:"8"},
+        {pregunta:"72 ÷ 9 = ?", respuesta:"8"}
+      ];
+      let cont = document.getElementById('division-ejercicios');
+      cont.innerHTML = '';
+      ejercicios.forEach((e, i) => {
+        let div = document.createElement('div');
+        div.innerHTML = `${e.pregunta} <input type="text" id="div-${i}" placeholder="Escribe"> <button onclick="verificarDivision(${i}, '${e.respuesta}')">Verificar</button> <span id="feedback-div-${i}"></span>`;
+        cont.appendChild(div);
+      });
+      // Enunciados
+      const enunciados = [
+        {p:"Si tienes 24 caramelos y los repartes entre 6 amigos, ¿cuántos le tocan a cada uno?", opciones:["3","4","5","6"], correcta:1},
+        {p:"Un grupo de 18 niños se divide en 3 equipos iguales. ¿Cuántos niños tiene cada equipo?", opciones:["4","5","6","7"], correcta:2},
+        {p:"Hay 30 flores y se ponen en 5 jarrones con la misma cantidad. ¿Cuántas flores hay en cada jarrón?", opciones:["4","5","6","7"], correcta:1},
+        {p:"Tienes 36 galletas y las repartes entre 9 niños. ¿Cuántas galletas recibe cada uno?", opciones:["3","4","5","6"], correcta:1},
+        {p:"Un libro tiene 48 páginas y decides leer 6 páginas cada día. ¿En cuántos días terminarás?", opciones:["6","7","8","9"], correcta:2},
+        {p:"Hay 28 alumnos y se forman 4 filas iguales. ¿Cuántos alumnos hay en cada fila?", opciones:["5","6","7","8"], correcta:2},
+        {p:"Un paquete de 45 lápices se reparte entre 5 estuches iguales. ¿Cuántos lápices tiene cada estuche?", opciones:["7","8","9","10"], correcta:2},
+        {p:"Tienes 56 manzanas y las guardas en 8 cajas. ¿Cuántas manzanas hay en cada caja?", opciones:["5","6","7","8"], correcta:2},
+        {p:"Hay 63 libros y se colocan en 9 repisas. ¿Cuántos libros hay en cada repisa?", opciones:["5","6","7","8"], correcta:2},
+        {p:"Un jardinero tiene 72 rosas y quiere formar ramos de 8. ¿Cuántos ramos puede hacer?", opciones:["7","8","9","10"], correcta:2}
+      ];
+      let cont2 = document.getElementById('division-enunciados');
+      cont2.innerHTML = '';
+      enunciados.forEach((e, i) => {
+        let div = document.createElement('div');
+        div.className = 'quiz-container';
+        let html = `<p><strong>${i+1}. ${e.p}</strong></p><div class="options">`;
+        e.opciones.forEach((op, j) => {
+          html += `<button onclick="responderDivisionEnunciado(${i}, ${j})">${op}</button>`;
+        });
+        html += `</div><div id="feedback-divEn-${i}" class="feedback"></div>`;
+        div.innerHTML = html;
+        cont2.appendChild(div);
+      });
+    }
+
+    function verificarDivision(id, correcta) {
+      const input = document.getElementById('div-' + id);
+      const fb = document.getElementById('feedback-div-' + id);
+      if (input.value.trim() === correcta) {
+        fb.textContent = '✅ Correcto';
+        fb.className = 'feedback correct';
+      } else {
+        fb.textContent = '❌ Incorrecto. Respuesta: ' + correcta;
+        fb.className = 'feedback wrong';
+      }
+    }
+
+    function responderDivisionEnunciado(id, seleccion) {
+      const enunciados = [
+        {p:"Si tienes 24 caramelos...", opciones:["3","4","5","6"], correcta:1},
+        {p:"Un grupo de 18 niños...", opciones:["4","5","6","7"], correcta:2},
+        {p:"Hay 30 flores...", opciones:["4","5","6","7"], correcta:1},
+        {p:"Tienes 36 galletas...", opciones:["3","4","5","6"], correcta:1},
+        {p:"Un libro tiene 48 páginas...", opciones:["6","7","8","9"], correcta:2},
+        {p:"Hay 28 alumnos...", opciones:["5","6","7","8"], correcta:2},
+        {p:"Un paquete de 45 lápices...", opciones:["7","8","9","10"], correcta:2},
+        {p:"Tienes 56 manzanas...", opciones:["5","6","7","8"], correcta:2},
+        {p:"Hay 63 libros...", opciones:["5","6","7","8"], correcta:2},
+        {p:"Un jardinero tiene 72 rosas...", opciones:["7","8","9","10"], correcta:2}
+      ];
+      const e = enunciados[id];
+      const fb = document.getElementById('feedback-divEn-' + id);
+      const botones = document.querySelectorAll(`#division-enunciados .quiz-container`)[id].querySelectorAll('.options button');
+      botones.forEach((btn, i) => {
+        btn.disabled = true;
+        if (i === e.correcta) btn.classList.add('correct');
+        else if (i === seleccion && i !== e.correcta) btn.classList.add('wrong');
+      });
+      if (seleccion === e.correcta) {
+        fb.textContent = '✅ Correcto';
+        fb.className = 'feedback correct';
+        // marcar progreso después de completar todos
+      } else {
+        fb.textContent = '❌ Incorrecto. La correcta era: ' + e.opciones[e.correcta];
+        fb.className = 'feedback wrong';
+      }
+    }
+
+    // ============================================================
+    // 7. INICIALIZAR
+    // ============================================================
+    document.addEventListener('DOMContentLoaded', function() {
+      // Mostrar página de inicio
+      showPage('home');
+      // Cargar progreso
+      actualizarProgreso();
+      // Listeners de navegación
+      document.querySelectorAll('.nav a').forEach(a => {
+        a.addEventListener('click', function(e) {
+          e.preventDefault();
+          showPage(this.dataset.page);
+        });
+      });
+      document.querySelectorAll('.subject-card').forEach(card => {
+        card.addEventListener('click', function() {
+          showPage(this.dataset.page);
+        });
+      });
+    });
+  </script>
+</div>
+</body>
+</html>
