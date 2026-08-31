@@ -8,7 +8,6 @@ import {
   ArrowLeft,
   PlusCircle,
   Play,
-  FileText,
   Star,
   Clock,
   CheckCircle2,
@@ -17,7 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
-import confetti from "canvas-confetti";
+import { triggerConfetti } from "@/utils/confetti";
 
 interface SubjectViewProps {
   subjectId: SubjectId;
@@ -44,11 +43,7 @@ export const SubjectView: React.FC<SubjectViewProps> = ({
   };
 
   const handleStartActivity = (title: string) => {
-    confetti({
-      particleCount: 40,
-      spread: 50,
-      origin: { y: 0.6 },
-    });
+    triggerConfetti();
     toast.success(`Iniciando actividad: "${title}"`, {
       description: "¡Diviértete mientras sumas puntos mágicos!",
     });
@@ -114,7 +109,7 @@ export const SubjectView: React.FC<SubjectViewProps> = ({
         <div className="absolute left-1/2 -top-12 w-32 h-32 bg-white/10 rounded-full blur-lg pointer-events-none" />
       </div>
 
-      {/* Main Content Area - Empty & Ready State */}
+      {/* Main Content Area */}
       <div className="bg-white/80 backdrop-blur-sm border border-purple-100 rounded-3xl p-6 sm:p-8 shadow-sm">
         <div className="flex items-center justify-between mb-6 pb-3 border-b border-purple-50">
           <div>

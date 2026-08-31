@@ -5,15 +5,13 @@ import {
   Sparkles,
   BookOpen,
   Landmark,
-  Star,
   Award,
   Calendar,
   Flame,
   ArrowRight,
-  ShieldAlert,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import confetti from "canvas-confetti";
+import { triggerConfetti } from "@/utils/confetti";
 
 interface DashboardHomeProps {
   currentRole: UserRole;
@@ -50,12 +48,7 @@ export const DashboardHome: React.FC<DashboardHomeProps> = ({
   const greeting = getGreeting();
 
   const handleCheer = () => {
-    confetti({
-      particleCount: 70,
-      spread: 70,
-      origin: { y: 0.4 },
-      colors: ["#F472B6", "#A78BFA", "#38BDF8", "#FDE047"],
-    });
+    triggerConfetti();
   };
 
   return (
@@ -189,7 +182,7 @@ export const DashboardHome: React.FC<DashboardHomeProps> = ({
         </div>
       </div>
 
-      {/* Lower Highlights for Kids */}
+      {/* Lower Highlights */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="p-5 rounded-3xl bg-white border border-purple-100 shadow-sm flex items-center gap-4">
           <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-pink-400 to-rose-400 flex items-center justify-center text-white shrink-0 shadow-md shadow-pink-200">

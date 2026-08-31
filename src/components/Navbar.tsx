@@ -9,7 +9,6 @@ import {
   ShieldCheck,
   ChevronDown,
   Search,
-  Heart,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -20,9 +19,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
-import confetti from "canvas-confetti";
+import { triggerConfetti } from "@/utils/confetti";
 
 interface NavbarProps {
   currentRole: UserRole;
@@ -67,12 +65,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   const triggerCelebrate = () => {
-    confetti({
-      particleCount: 50,
-      spread: 60,
-      origin: { y: 0.2 },
-      colors: ["#F472B6", "#C084FC", "#67E8F9", "#FDE047"],
-    });
+    triggerConfetti();
     toast("¡Puntos de recompensa activos!", {
       description: "¡Has ganado 15 estrellas de sabiduría hoy! ✨",
     });
