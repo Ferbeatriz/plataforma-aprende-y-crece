@@ -1,0 +1,55 @@
+import { SubjectConfig } from "@/types";
+
+export const SUBJECTS: Record<string, SubjectConfig> = {
+  lenguaje: {
+    id: "lenguaje",
+    name: "Lenguaje",
+    subtitle: "Lectura mágica, redacción y cuentos",
+    iconName: "BookOpen",
+    colorScheme: {
+      bgLight: "bg-pink-50/80",
+      bgAccent: "bg-pink-100",
+      border: "border-pink-200",
+      text: "text-pink-700",
+      badgeBg: "bg-pink-100 text-pink-700",
+      badgeText: "text-pink-600",
+      gradient: "from-pink-400 via-rose-300 to-purple-300",
+    },
+    description: "Explora aventuras fantásticas, ortografía divertida y crea historias maravillosas con tus personajes favoritos.",
+    topicsCount: 6,
+  },
+  historia: {
+    id: "historia",
+    name: "Historia Universal",
+    subtitle: "Viajes en el tiempo y grandes civilizaciones",
+    iconName: "Landmark",
+    colorScheme: {
+      bgLight: "bg-amber-50/80",
+      bgAccent: "bg-amber-100",
+      border: "border-amber-200",
+      text: "text-amber-700",
+      badgeBg: "bg-amber-100 text-amber-800",
+      badgeText: "text-amber-600",
+      gradient: "from-amber-300 via-orange-300 to-rose-300",
+    },
+    description: "Descubre pirámides, castillos medievales, inventos fascinantes y a las mujeres y hombres que cambiaron el mundo.",
+    topicsCount: 8,
+  },
+  matematicas: {
+    id: "matematicas",
+    name: "Matemáticas",
+    subtitle: "Números brillantes, retos y geometría",
+    iconName: "Sparkles",
+    colorScheme: {
+      bgLight: "bg-indigo-50/80",
+      bgAccent: "bg-indigo-100",
+      border: "border-indigo-200",
+      text: "text-indigo-700",
+      badgeBg: "bg-indigo-100 text-indigo-700",
+      badgeText: "text-indigo-600",
+      gradient: "from-indigo-400 via-purple-300 to-pink-300",
+    },
+    description: "Aprende jugando con acertijos, fracciones mágicas, figuras geométricas y desafíos que despiertan tu ingenio.",
+    topicsCount: 7,
+  },
+};
