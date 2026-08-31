@@ -19,129 +19,6 @@ export interface WrittenPromptItem {
   title: string;
   prompt: string;
   guidance: string;
-  requiredKeywords: string[][]; // Array of keyword groups (must match at least one word from each group or threshold)
-  minimumWords: number;
-  sampleModelAnswer: string;
-}
-
-export const LENGUAJE_THEORY = {
-  title: "El Mágico Universo del Texto Narrativo",
-  subtitle: "Descubre cómo las grandes autoras y autores tejen historias inolvidables",
-  introduction: `¿Alguna vez te has sumergido en un libro y sentido que viajas a un pueblo donde llueven mariposas amarillas o a una selva encantada llena de secretos? ¡Eso es el poder de un **texto narrativo**! Un texto narrativo es aquel que **relata una serie de acontecimientos, reales o imaginarios, protagonizados por personajes en un tiempo y espacio determinados**.`,
-  elements: [
-    {
-      name: "1. El Narrador (La voz mágica)",
-      desc: "No es la persona de carne y hueso que escribió el libro (el autor), sino el ser creado para contar los hechos. Puede ser en **Primera Persona (Narrador Protagonista o Testigo)** diciendo 'Yo caminé por la selva' o en **Tercera Persona (Narrador Omnisciente u Observador)** diciendo 'Ella descubrió la llave dorada'. El narrador omnisciente lo sabe todo: qué sienten, sueñan y piensan los personajes.",
-      badge: "Voz del relato",
-      emoji: "🎙️",
-    },
-    {
-      name: "2. Los Personajes (El corazón de la aventura)",
-      desc: "Son quienes viven las aventuras y toman decisiones. Se dividen en **Principales o Protagonistas** (como la valiente Alexander Cold o la sabia Eva Luna) y **Secundarios** (los que acompañan, ayudan o generan obstáculos en el camino).",
-      badge: "Protagonistas y secundarios",
-      emoji: "🧚‍♀️",
-    },
-    {
-      name: "3. El Espacio y el Ambiente",
-      desc: "El lugar físico y la atmósfera donde ocurren las acciones. Puede ser un sitio real como la cordillera de los Andes o un lugar fantástico e inolvidable como **Macondo**, la legendaria aldea rodeada de ciénagas creada por Gabriel García Márquez.",
-      badge: "Lugares y atmósferas",
-      emoji: "🗺️",
-    },
-    {
-      name: "4. El Tiempo",
-      desc: "La época histórica (el pasado colonial, el presente o el futuro) y la duración de la historia (una tarde de tormenta o cien años a lo largo de varias generaciones).",
-      badge: "Cronología",
-      emoji: "⏳",
-    },
-    {
-      name: "5. La Trama o Estructura Narrativa",
-      desc: "Se compone clásicamente de tres grandes momentos: **Inicio** (presentación de personajes y contexto armónico), **Nudo o Conflicto** (el problema que altera la tranquilidad y desafía a los personajes) y **Desenlace** (la resolución de la aventura y el nuevo orden final).",
-      badge: "Inicio - Nudo - Desenlace",
-      emoji: "📖",
-    },
-  ],
-  literarySpotlight: [
-    {
-      author: "Gabriel García Márquez (Colombia)",
-      work: "Cien años de soledad",
-      quote: "Muchos años después, frente al pelotón de fusilamiento, el coronel Aureliano Buendía había de recordar aquella tarde remota en que su padre lo llevó a conocer el hielo. Macondo era entonces una aldea de veinte casas de barro y cañabrava...",
-      analysis: "Observa cómo el narrador omnisciente viaja en el tiempo (del futuro al pasado) y describe el espacio con enorme belleza y poesía sensorial.",
-    },
-    {
-      author: "Isabel Allende (Chile)",
-      work: "Cuentos de Eva Luna / La ciudad de las bestias",
-      quote: "Me llamo Eva, que significa vida, según un libro que mi madre consultó para elegir mi nombre. Nací en el último cuarto de una casa sombría y crecí entre muebles extravagantes y libros antiguos...",
-      analysis: "Aquí vemos un brillante narrador en primera persona (protagonista) donde la misma Eva Luna nos presenta su origen y la fuerza de su propia voz.",
-    },
-  ],
-};
-
-export const MULTIPLE_CHOICE_QUESTIONS: MultipleChoiceItem[] = [
-  {
-    id: 1,
-    question: "¿Qué es fundamentalmente un texto narrativo?",
-    options: [
-      "Un conjunto de instrucciones para armar un artefacto.",
-      "Un relato de acontecimientos reales o imaginarios que les suceden a unos personajes en un tiempo y lugar.",
-      "Una lista de rimas poéticas que no cuenta ninguna historia.",
-      "Un diccionario con definiciones científicas y tablas de números.",
-    ],
-    correctIndex: 1,
-    explanation: "¡Exacto! El texto narrativo se caracteriza por contar hechos o sucesos en una secuencia temporal con personajes.",
-  },
-  {
-    id: 2,
-    question: "¿Cuál es la diferencia principal entre el 'Autor' y el 'Narrador'?",
-    options: [
-      "El autor es la persona real que escribe la obra; el narrador es la voz inventada dentro del texto para relatar los hechos.",
-      "El autor solo dibuja las portadas y el narrador compra los libros.",
-      "Son exactamente la misma persona en todos los libros sin excepción.",
-      "El narrador siempre es el villano de la historia.",
-    ],
-    correctIndex: 0,
-    explanation: "¡Muy bien! El autor es la persona de carne y hueso (como Isabel Allende), mientras que el narrador es la entidad ficticia que cuenta la historia.",
-  },
-  {
-    id: 3,
-    question: "Si una historia comienza con: 'Aquella mañana yo salí corriendo hacia el bosque encantado...', ¿qué tipo de narrador es?",
-    options: [
-      "Narrador omnisciente (tercera persona).",
-      "Narrador protagonista en primera persona ('yo').",
-      "Narrador enciclopédico.",
-      "Narrador invisible en segunda persona.",
-    ],
-    correctIndex: 1,
-    explanation: "¡Brillante! El uso del pronombre 'yo' y verbos en primera persona indican que el narrador es protagonista o testigo de su propia vivencia.",
-  },
-  {
-    id: 4,
-    question: "En la estructura clásica de la narración, ¿qué sucede durante el 'Nudo o Conflicto'?",
-    options: [
-      "Se presentan los nombres y títulos de la contratapa del libro.",
-      "Ocurre el problema o situación difícil que altera la calma y desata las acciones principales.",
-      "Se soluciona todo mágicamente sin ningún esfuerzo ni reto.",
-      "Es<dyad-write path="src/data/lenguajeModuleData.ts" description="Complete educational dataset for the Lenguaje module including theory, 10 multiple choice items, 7 true/false items, and 5 written response prompts with grading criteria">
-export interface MultipleChoiceItem {
-  id: number;
-  question: string;
-  options: string[];
-  correctIndex: number;
-  explanation: string;
-}
-
-export interface TrueFalseItem {
-  id: number;
-  statement: string;
-  isTrue: boolean;
-  explanation: string;
-  requiredKeywordsForFalse?: string[];
-}
-
-export interface WrittenPromptItem {
-  id: number;
-  title: string;
-  prompt: string;
-  guidance: string;
   requiredKeywords: string[][]; // Groups of keywords; response should include matches from these key concepts
   minimumWords: number;
   sampleModelAnswer: string;
@@ -150,7 +27,7 @@ export interface WrittenPromptItem {
 export const LENGUAJE_THEORY = {
   title: "El Mágico Universo del Texto Narrativo",
   subtitle: "Descubre cómo las grandes autoras y autores tejen historias inolvidables",
-  introduction: `¿Alguna vez te has sumergido en un libro y sentido que viajas a un pueblo donde llueven mariposas amarillas o a una selva encantada llena de secretos? ¡Eso es el poder de un texto narrativo! Un texto narrativo es aquel que relata una serie de acontecimientos, reales o imaginarios, protagonizados por personajes en un tiempo y espacio determinados.`,
+  introduction: "El texto narrativo es aquel que relata una serie de acontecimientos, reales o imaginarios, protagonizados por personajes en un tiempo y espacio determinados.",
   elements: [
     {
       name: "1. El Narrador (La voz mágica)",
