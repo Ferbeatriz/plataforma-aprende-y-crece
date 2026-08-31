@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { TeacherCreateModal } from "@/components/TeacherCreateModal";
 import { LenguajeModuleView } from "@/components/LenguajeModuleView";
+import { HistoriaModuleView } from "@/components/HistoriaModuleView";
 
 interface SubjectViewProps {
   subjectId: SubjectId;
@@ -100,7 +101,11 @@ export const SubjectView: React.FC<SubjectViewProps> = ({
 
           <div className="flex flex-col items-start md:items-end gap-2 shrink-0">
             <span className="px-3.5 py-1.5 rounded-full bg-white/25 backdrop-blur-md text-xs font-bold border border-white/30">
-              {subjectId === "lenguaje" ? "Módulo Integral Activo" : `${filteredLessons.length} Temas`}
+              {subjectId === "lenguaje"
+                ? "Módulo Integral Activo"
+                : subjectId === "historia"
+                ? "Grecia & Roma Activo"
+                : `${filteredLessons.length} Temas`}
             </span>
             {currentRole !== "student" && (
               <Button
@@ -119,11 +124,13 @@ export const SubjectView: React.FC<SubjectViewProps> = ({
         <div className="absolute left-1/2 -top-12 w-32 h-32 bg-white/10 rounded-full blur-lg pointer-events-none" />
       </div>
 
-      {/* If Lenguaje: Render the comprehensive specialized interactive module */}
+      {/* Render Specialized Interactive Modules */}
       {subjectId === "lenguaje" ? (
         <LenguajeModuleView onEarnStars={onEarnStars} />
+      ) : subjectId === "historia" ? (
+        <HistoriaModuleView onEarnStars={onEarnStars} />
       ) : (
-        /* Standard Subject View for Historia & Matemáticas */
+        /* Standard Subject View for Matemáticas */
         <div className="bg-white/80 backdrop-blur-sm border border-purple-100 rounded-3xl p-6 sm:p-8 shadow-sm">
           {/* Controls: Search and Grade Filters */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-purple-50">
