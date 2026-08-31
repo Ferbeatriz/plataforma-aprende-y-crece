@@ -1,5 +1,5 @@
-import React from "react";
-import { SubjectId, UserRole } from "@/types";
+import React, { useState } from "react";
+import { SubjectId, UserRole, SchoolGrade, LessonTopic } from "@/types";
 import { SUBJECTS } from "@/data/subjects";
 import {
   BookOpen,
@@ -12,24 +12,44 @@ import {
   Clock,
   CheckCircle2,
   FolderOpen,
+  Search,
+  Filter,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { toast } from "sonner";
-import { triggerConfetti } from "@/utils/confetti";
+import { TeacherCreateModal } from "@/components/TeacherCreateModal";
 
 interface SubjectViewProps {
   subjectId: SubjectId;
   currentRole: UserRole;
+  lessons: LessonTopic[];
   onBack: () => void;
+  onStartLesson: (lesson: LessonTopic) => void;
+  onCreateLesson: (lesson: LessonTopic) => void;
 }
 
 export const SubjectView: React.FC<SubjectViewProps> = ({
   subjectId,
   currentRole,
+  lessons,
   onBack,
+  onStartLesson,
+  onCreateLesson,
 }) => {
   const subject = SUBJECTS[subjectId];
+  const [selectedGrade, setSelectedGrade] = useState<SchoolGrade | "all">("all");
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState<boolean>(false);
+
+  const filteredLessons = lessons
+    .filter((l) => l.subjectId === subjectId)
+    .filter((l) => (selectedGrade === "all" ? true : l.grade === selectedGrade))
+    .filter((l) =>
+      searchQuery.trim() === ""
+        ? true
+        : l.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          l.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
   const getSubjectIcon = () => {
     switch (subjectId) {
@@ -42,19 +62,6 @@ export const SubjectView: React.FC<SubjectViewProps> = ({
     }
   };
 
-  const handleStartActivity = (title: string) => {
-    triggerConfetti();
-    toast.success(`Iniciando actividad: "${title}"`, {
-      description: "¡Diviértete mientras sumas puntos mágicos!",
-    });
-  };
-
-  const handleAddTopic = () => {
-    toast.info("Función de creación docente", {
-      description: `Creando nuevo módulo para ${subject.name}`,
-    });
-  };
-
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
       {/* Header Banner */}
@@ -65,7 +72,7 @@ export const SubjectView: React.FC<SubjectViewProps> = ({
           <div className="space-y-2">
             <button
               onClick={onBack}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm text-xs font-semibold transition-all mb-2"
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm text-xs font-semibold transition-all mb-2 text-white"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Volver a todas las materias</span>
@@ -75,30 +82,30 @@ export const SubjectView: React.FC<SubjectViewProps> = ({
                 {getSubjectIcon()}
               </div>
               <div>
-                <h1 className="text-2xl sm:text-3xl font-extrabold drop-shadow-sm">
+                <h1 className="text-2xl sm:text-3xl font-black drop-shadow-sm">
                   {subject.name}
                 </h1>
-                <p className="text-sm text-white/90 font-medium">
+                <p className="text-sm text-white/95 font-medium">
                   {subject.subtitle}
                 </p>
               </div>
             </div>
-            <p className="text-xs sm:text-sm text-white/80 max-w-xl pt-1">
+            <p className="text-xs sm:text-sm text-white/85 max-w-xl pt-1">
               {subject.description}
             </p>
           </div>
 
           <div className="flex flex-col items-start md:items-end gap-2 shrink-0">
             <span className="px-3.5 py-1.5 rounded-full bg-white/25 backdrop-blur-md text-xs font-bold border border-white/30">
-              {subject.topicsCount} Temas Disponibles
+              {filteredLessons.length} Temas Disponibles
             </span>
             {currentRole !== "student" && (
               <Button
-                onClick={handleAddTopic}
-                className="bg-white text-purple-800 hover:bg-white/90 rounded-2xl font-bold text-xs shadow-md"
+                onClick={() => setIsCreateModalOpen(true)}
+                className="bg-white text-purple-900 hover:bg-white/90 rounded-2xl font-bold text-xs shadow-md border border-white/50"
               >
-                <PlusCircle className="w-4 h-4 mr-1.5" />
-                Nuevo Contenido
+                <PlusCircle className="w-4 h-4 mr-1.5 text-pink-600" />
+                Nueva Lección
               </Button>
             )}
           </div>
@@ -111,111 +118,121 @@ export const SubjectView: React.FC<SubjectViewProps> = ({
 
       {/* Main Content Area */}
       <div className="bg-white/80 backdrop-blur-sm border border-purple-100 rounded-3xl p-6 sm:p-8 shadow-sm">
-        <div className="flex items-center justify-between mb-6 pb-3 border-b border-purple-50">
-          <div>
-            <h2 className="text-lg font-bold text-purple-950 flex items-center gap-2">
-              <FolderOpen className="w-5 h-5 text-pink-500" />
-              Módulos y Lecciones de {subject.name}
-            </h2>
-            <p className="text-xs text-gray-500">
-              Explora las lecciones diseñadas para tu grado
-            </p>
+        {/* Controls: Search and Grade Filters */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-purple-50">
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
+            <span className="text-xs font-bold text-purple-400 flex items-center gap-1 shrink-0 mr-1">
+              <Filter className="w-3.5 h-3.5" /> Grado:
+            </span>
+            {(["all", "4to", "5to", "6to"] as const).map((gradeKey) => (
+              <button
+                key={gradeKey}
+                onClick={() => setSelectedGrade(gradeKey)}
+                className={`px-3 py-1 rounded-full text-xs font-semibold transition-all ${
+                  selectedGrade === gradeKey
+                    ? "bg-purple-600 text-white shadow-sm"
+                    : "bg-purple-50 text-purple-700 hover:bg-purple-100"
+                }`}
+              >
+                {gradeKey === "all" ? "Todos los Grados" : `${gradeKey} Primaria`}
+              </button>
+            ))}
           </div>
-          <Badge variant="outline" className={`${subject.colorScheme.badgeBg} border-none font-semibold px-3 py-1 rounded-full text-xs`}>
-            {currentRole === "student" ? "Modo Alumna" : "Gestión"}
-          </Badge>
+
+          <div className="relative w-full sm:w-64">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-purple-300" />
+            <input
+              type="text"
+              placeholder="Buscar en esta materia..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-9 pr-3 py-1.5 text-xs bg-purple-50/60 border border-purple-100 rounded-full focus:outline-none focus:ring-2 focus:ring-pink-300 text-purple-800 placeholder:text-purple-300"
+            />
+          </div>
         </div>
 
         {/* Interactive Lesson Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {/* Card 1 */}
-          <div className="group p-5 rounded-2xl bg-gradient-to-b from-white to-purple-50/40 border border-purple-100/80 hover:border-pink-300 hover:shadow-md transition-all">
-            <div className="flex items-start justify-between mb-3">
-              <span className="text-2xl">🌱</span>
-              <span className="text-[10px] font-bold bg-green-100 text-green-700 px-2 py-0.5 rounded-full flex items-center gap-1">
-                <CheckCircle2 className="w-3 h-3" /> Listo
-              </span>
-            </div>
-            <h3 className="font-bold text-sm text-purple-950 group-hover:text-pink-600 transition-colors">
-              {subjectId === "lenguaje" && "1. El Secreto de las Fábulas"}
-              {subjectId === "historia" && "1. Misterios del Antiguo Egipto"}
-              {subjectId === "matematicas" && "1. Aventura con Fracciones"}
-            </h3>
-            <p className="text-xs text-gray-500 mt-1 mb-4">
-              {subjectId === "lenguaje" && "Aprende la moraleja y los personajes mágicos."}
-              {subjectId === "historia" && "Pirámides, faraones y jeroglíficos divertidos."}
-              {subjectId === "matematicas" && "Pizzas mágicas y partes iguales en el laboratorio."}
-            </p>
-            <div className="flex items-center justify-between pt-2 border-t border-purple-50">
-              <span className="text-[11px] text-purple-600 font-medium flex items-center gap-1">
-                <Clock className="w-3 h-3" /> 15 min
-              </span>
-              <Button
-                size="sm"
-                onClick={() => handleStartActivity("Módulo 1")}
-                className="rounded-xl bg-pink-500 hover:bg-pink-600 text-white text-xs h-7 px-3 shadow-sm"
+          {filteredLessons.map((lesson) => {
+            return (
+              <div
+                key={lesson.id}
+                className="group p-5 rounded-3xl bg-gradient-to-b from-white to-purple-50/30 border border-purple-100/90 hover:border-pink-300 hover:shadow-lg transition-all duration-300 flex flex-col justify-between"
               >
-                <Play className="w-3 h-3 mr-1 fill-white" /> Empezar
-              </Button>
-            </div>
-          </div>
+                <div>
+                  <div className="flex items-start justify-between mb-3">
+                    <span className="text-3xl p-1 bg-pink-50 rounded-2xl group-hover:scale-110 transition-transform">
+                      {lesson.icon}
+                    </span>
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[10px] font-bold bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full">
+                        {lesson.grade}
+                      </span>
+                      {lesson.completed && (
+                        <span className="text-[10px] font-bold bg-green-100 text-green-700 px-2 py-0.5 rounded-full flex items-center gap-1">
+                          <CheckCircle2 className="w-3 h-3" /> Hecho
+                        </span>
+                      )}
+                    </div>
+                  </div>
 
-          {/* Card 2 */}
-          <div className="group p-5 rounded-2xl bg-gradient-to-b from-white to-purple-50/40 border border-purple-100/80 hover:border-pink-300 hover:shadow-md transition-all">
-            <div className="flex items-start justify-between mb-3">
-              <span className="text-2xl">⭐</span>
-              <span className="text-[10px] font-bold bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full flex items-center gap-1">
-                <Star className="w-3 h-3 fill-amber-400" /> +50 pts
-              </span>
-            </div>
-            <h3 className="font-bold text-sm text-purple-950 group-hover:text-pink-600 transition-colors">
-              {subjectId === "lenguaje" && "2. Palabras y Acentos Mágicos"}
-              {subjectId === "historia" && "2. Los Castillos y la Época Medieval"}
-              {subjectId === "matematicas" && "2. Desafío de Multiplicación Veloz"}
-            </h3>
-            <p className="text-xs text-gray-500 mt-1 mb-4">
-              {subjectId === "lenguaje" && "Descubre las sílabas tónicas y agudas."}
-              {subjectId === "historia" && "Caballeros, reinas y grandes inventos."}
-              {subjectId === "matematicas" && "Tablas rápidas con minijuegos interactivos."}
-            </p>
-            <div className="flex items-center justify-between pt-2 border-t border-purple-50">
-              <span className="text-[11px] text-purple-600 font-medium flex items-center gap-1">
-                <Clock className="w-3 h-3" /> 20 min
-              </span>
-              <Button
-                size="sm"
-                onClick={() => handleStartActivity("Módulo 2")}
-                className="rounded-xl bg-purple-500 hover:bg-purple-600 text-white text-xs h-7 px-3 shadow-sm"
-              >
-                <Play className="w-3 h-3 mr-1 fill-white" /> Empezar
-              </Button>
-            </div>
-          </div>
+                  <h3 className="font-bold text-sm text-purple-950 group-hover:text-pink-600 transition-colors line-clamp-2">
+                    {lesson.title}
+                  </h3>
+                  <p className="text-xs text-gray-500 mt-1 mb-4 line-clamp-2">
+                    {lesson.description}
+                  </p>
+                </div>
 
-          {/* Empty Space / Next upcoming card */}
-          <div className="p-5 rounded-2xl border-2 border-dashed border-purple-200 bg-purple-50/30 flex flex-col items-center justify-center text-center">
-            <div className="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center text-pink-500 mb-2">
-              <Sparkles className="w-5 h-5 animate-pulse" />
+                <div className="flex items-center justify-between pt-3 border-t border-purple-50">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[11px] text-purple-600 font-medium flex items-center gap-1">
+                      <Clock className="w-3 h-3" /> {lesson.durationMinutes}m
+                    </span>
+                    <span className="text-[11px] text-amber-600 font-bold flex items-center gap-0.5">
+                      <Star className="w-3 h-3 fill-amber-400 text-amber-400" /> +{lesson.pointsReward}
+                    </span>
+                  </div>
+
+                  <Button
+                    size="sm"
+                    onClick={() => onStartLesson(lesson)}
+                    className="rounded-2xl bg-gradient-to-r from-pink-500 to-purple-600 hover:opacity-90 text-white text-xs h-8 px-3.5 shadow-sm shadow-pink-200"
+                  >
+                    <Play className="w-3 h-3 mr-1 fill-white" /> Jugar
+                  </Button>
+                </div>
+              </div>
+            );
+          })}
+
+          {/* Quick teacher add card */}
+          {currentRole !== "student" && (
+            <div
+              onClick={() => setIsCreateModalOpen(true)}
+              className="p-5 rounded-3xl border-2 border-dashed border-purple-200 bg-purple-50/20 hover:bg-pink-50/30 hover:border-pink-300 transition-all flex flex-col items-center justify-center text-center cursor-pointer min-h-[170px]"
+            >
+              <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mb-2">
+                <PlusCircle className="w-5 h-5" />
+              </div>
+              <h4 className="font-bold text-xs text-purple-950">
+                Añadir Nueva Lección
+              </h4>
+              <p className="text-[11px] text-purple-500 mt-0.5 max-w-[170px]">
+                Crea preguntas, retos o lecturas para tu clase.
+              </p>
             </div>
-            <h4 className="font-bold text-xs text-purple-900">
-              Próximo Tema en Preparación
-            </h4>
-            <p className="text-[11px] text-purple-600/80 mt-1 max-w-[180px]">
-              Nuevas lecciones interactivas se desbloquearán pronto.
-            </p>
-            {currentRole !== "student" && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleAddTopic}
-                className="mt-3 text-xs text-purple-700 hover:bg-purple-100 rounded-xl"
-              >
-                + Añadir lección
-              </Button>
-            )}
-          </div>
+          )}
         </div>
       </div>
+
+      {/* Teacher Create Modal */}
+      <TeacherCreateModal
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+        defaultSubjectId={subjectId}
+        onCreateLesson={onCreateLesson}
+      />
     </div>
   );
 };

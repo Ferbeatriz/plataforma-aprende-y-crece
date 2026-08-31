@@ -8,19 +8,28 @@ import {
   Compass,
   Trophy,
   Heart,
-  HelpCircle,
 } from "lucide-react";
 import { SUBJECTS } from "@/data/subjects";
 
+export type ActiveView = "dashboard" | "subject" | "achievements" | "curiosities";
+
 interface SidebarProps {
   selectedSubject: SubjectId | null;
-  onSelectSubject: (id: SubjectId | null) => void;
+  activeView: ActiveView;
+  onSelectSubject: (id: SubjectId) => void;
+  onNavigateHome: () => void;
+  onOpenAchievements: () => void;
+  onOpenCuriosities: () => void;
   currentRole: UserRole;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
   selectedSubject,
+  activeView,
   onSelectSubject,
+  onNavigateHome,
+  onOpenAchievements,
+  onOpenCuriosities,
   currentRole,
 }) => {
   const navItems = [
@@ -30,7 +39,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       icon: BookOpen,
       badge: "6 temas",
       colorClasses: {
-        active: "bg-pink-100 text-pink-700 shadow-sm border border-pink-200",
+        active: "bg-pink-100 text-pink-700 shadow-sm border border-pink-200 font-bold",
         idle: "text-purple-900/80 hover:bg-pink-50/80 hover:text-pink-600",
         iconBg: "bg-pink-200 text-pink-700",
       },
@@ -41,7 +50,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       icon: Landmark,
       badge: "8 temas",
       colorClasses: {
-        active: "bg-amber-100 text-amber-800 shadow-sm border border-amber-200",
+        active: "bg-amber-100 text-amber-800 shadow-sm border border-amber-200 font-bold",
         idle: "text-purple-900/80 hover:bg-amber-50/80 hover:text-amber-700",
         iconBg: "bg-amber-200 text-amber-800",
       },
@@ -52,7 +61,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       icon: Sparkles,
       badge: "7 temas",
       colorClasses: {
-        active: "bg-indigo-100 text-indigo-700 shadow-sm border border-indigo-200",
+        active: "bg-indigo-100 text-indigo-700 shadow-sm border border-indigo-200 font-bold",
         idle: "text-purple-900/80 hover:bg-indigo-50/80 hover:text-indigo-600",
         iconBg: "bg-indigo-200 text-indigo-700",
       },
@@ -65,10 +74,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {/* Main Home Button */}
         <div>
           <button
-            onClick={() => onSelectSubject(null)}
+            onClick={onNavigateHome}
             className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all duration-200 ${
-              selectedSubject === null
-                ? "bg-gradient-to-r from-pink-400 to-purple-400 text-white shadow-md shadow-pink-200"
+              activeView === "dashboard"
+                ? "bg-gradient-to-r from-pink-400 to-purple-400 text-white shadow-md shadow-pink-200 font-bold"
                 : "text-purple-900/80 hover:bg-purple-50 hover:text-purple-600"
             }`}
           >
@@ -91,7 +100,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <div className="space-y-1.5">
             {navItems.map((item) => {
               const Icon = item.icon;
-              const isSelected = selectedSubject === item.id;
+              const isSelected = activeView === "subject" && selectedSubject === item.id;
 
               return (
                 <button
@@ -109,7 +118,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     >
                       <Icon className="w-4 h-4" />
                     </div>
-                    <span className="font-semibold text-left">{item.name}</span>
+                    <span className="text-left font-semibold">{item.name}</span>
                   </div>
                   <span
                     className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${
@@ -135,15 +144,24 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </div>
           <div className="space-y-1">
             <button
-              onClick={() => onSelectSubject(null)}
-              className="w-full flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-medium text-gray-600 hover:bg-pink-50 hover:text-pink-600 transition-colors"
+              onClick={onOpenAchievements}
+              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition-all ${
+                activeView === "achievements"
+                  ? "bg-amber-100 text-amber-800 border border-amber-200 shadow-sm"
+                  : "text-gray-600 hover:bg-pink-50 hover:text-pink-600"
+              }`}
             >
               <Trophy className="w-4 h-4 text-amber-500" />
               <span>Logros y Medallas</span>
             </button>
+
             <button
-              onClick={() => onSelectSubject(null)}
-              className="w-full flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-medium text-gray-600 hover:bg-purple-50 hover:text-purple-600 transition-colors"
+              onClick={onOpenCuriosities}
+              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition-all ${
+                activeView === "curiosities"
+                  ? "bg-purple-100 text-purple-800 border border-purple-200 shadow-sm"
+                  : "text-gray-600 hover:bg-purple-50 hover:text-purple-600"
+              }`}
             >
               <Compass className="w-4 h-4 text-purple-500" />
               <span>Club de Curiosidades</span>

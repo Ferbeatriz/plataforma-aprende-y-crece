@@ -9,6 +9,7 @@ import {
   Calendar,
   Flame,
   ArrowRight,
+  Compass,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { triggerConfetti } from "@/utils/confetti";
@@ -16,11 +17,15 @@ import { triggerConfetti } from "@/utils/confetti";
 interface DashboardHomeProps {
   currentRole: UserRole;
   onSelectSubject: (id: SubjectId) => void;
+  onOpenAchievements: () => void;
+  onOpenCuriosities: () => void;
 }
 
 export const DashboardHome: React.FC<DashboardHomeProps> = ({
   currentRole,
   onSelectSubject,
+  onOpenAchievements,
+  onOpenCuriosities,
 }) => {
   const getGreeting = () => {
     switch (currentRole) {
@@ -61,7 +66,7 @@ export const DashboardHome: React.FC<DashboardHomeProps> = ({
               <Sparkles className="w-3.5 h-3.5 animate-spin" />
               {greeting.badge}
             </span>
-            <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
+            <h1 className="text-2xl sm:text-4xl font-black tracking-tight">
               {greeting.title}
             </h1>
             <p className="text-sm sm:text-base text-purple-100 max-w-lg font-medium">
@@ -89,7 +94,7 @@ export const DashboardHome: React.FC<DashboardHomeProps> = ({
       <div>
         <div className="flex items-center justify-between mb-4 px-1">
           <div>
-            <h2 className="text-xl font-bold text-purple-950">
+            <h2 className="text-xl font-extrabold text-purple-950">
               Tus Asignaturas Principales
             </h2>
             <p className="text-xs text-purple-500">
@@ -106,7 +111,7 @@ export const DashboardHome: React.FC<DashboardHomeProps> = ({
           >
             <div>
               <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 rounded-2xl bg-pink-100 text-pink-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <div className="w-12 h-12 rounded-2xl bg-pink-100 text-pink-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-2xs">
                   <BookOpen className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-bold bg-pink-100 text-pink-700 px-2.5 py-1 rounded-full">
@@ -133,7 +138,7 @@ export const DashboardHome: React.FC<DashboardHomeProps> = ({
           >
             <div>
               <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center group-hover:scale-110 transition-transform shadow-2xs">
                   <Landmark className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-bold bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full">
@@ -160,7 +165,7 @@ export const DashboardHome: React.FC<DashboardHomeProps> = ({
           >
             <div>
               <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-700 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <div className="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-700 flex items-center justify-center group-hover:scale-110 transition-transform shadow-2xs">
                   <Sparkles className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-bold bg-indigo-100 text-indigo-700 px-2.5 py-1 rounded-full">
@@ -184,37 +189,46 @@ export const DashboardHome: React.FC<DashboardHomeProps> = ({
 
       {/* Lower Highlights */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="p-5 rounded-3xl bg-white border border-purple-100 shadow-sm flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-pink-400 to-rose-400 flex items-center justify-center text-white shrink-0 shadow-md shadow-pink-200">
+        <div
+          onClick={onOpenAchievements}
+          className="p-5 rounded-3xl bg-white border border-purple-100 shadow-sm flex items-center gap-4 cursor-pointer hover:border-pink-300 transition-all group"
+        >
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-pink-400 to-rose-400 flex items-center justify-center text-white shrink-0 shadow-md shadow-pink-200 group-hover:scale-105 transition-transform">
             <Award className="w-6 h-6" />
           </div>
           <div>
-            <h4 className="text-sm font-bold text-purple-950">
-              Medalla de la Semana: "Lectora Estrella"
+            <h4 className="text-sm font-bold text-purple-950 group-hover:text-pink-600 transition-colors">
+              Álbum de Logros y Medallas 🏆
             </h4>
             <p className="text-xs text-gray-500 mt-0.5">
-              Completa 2 lecciones más para desbloquear el trofeo brillante.
+              Revisa tus stickers mágicos y desbloquea el trofeo semanal.
             </p>
           </div>
           <Button
             size="sm"
-            onClick={handleCheer}
-            className="ml-auto rounded-xl bg-pink-100 text-pink-700 hover:bg-pink-200 border-none font-bold text-xs"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleCheer();
+            }}
+            className="ml-auto rounded-xl bg-pink-100 text-pink-700 hover:bg-pink-200 border-none font-bold text-xs shrink-0"
           >
             🎉 Celebrar
           </Button>
         </div>
 
-        <div className="p-5 rounded-3xl bg-white border border-purple-100 shadow-sm flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-purple-400 to-indigo-400 flex items-center justify-center text-white shrink-0 shadow-md shadow-purple-200">
-            <Calendar className="w-6 h-6" />
+        <div
+          onClick={onOpenCuriosities}
+          className="p-5 rounded-3xl bg-white border border-purple-100 shadow-sm flex items-center gap-4 cursor-pointer hover:border-purple-300 transition-all group"
+        >
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-purple-400 to-indigo-400 flex items-center justify-center text-white shrink-0 shadow-md shadow-purple-200 group-hover:scale-105 transition-transform">
+            <Compass className="w-6 h-6" />
           </div>
           <div>
-            <h4 className="text-sm font-bold text-purple-950">
-              Próximo Desafío En Vivo
+            <h4 className="text-sm font-bold text-purple-950 group-hover:text-purple-600 transition-colors">
+              Club de Curiosidades 🔮
             </h4>
             <p className="text-xs text-gray-500 mt-0.5">
-              Viernes 4:00 PM • Trivia Mágica de Historia y Números.
+              Descubre historias de grandes mujeres, acertijos y datos divertidos.
             </p>
           </div>
         </div>
