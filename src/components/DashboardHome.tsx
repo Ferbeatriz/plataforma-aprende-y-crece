@@ -31,7 +31,7 @@ export const DashboardHome: React.FC<DashboardHomeProps> = ({
     switch (currentRole) {
       case "student":
         return {
-          title: "¡Hola, Fernanda! 🌸",
+          title: "¡Hola, Sofía! 🌸",
           subtitle: "¿Qué emocionante aventura aprenderemos hoy?",
           badge: "Nivel 4 Exploradora",
         };
