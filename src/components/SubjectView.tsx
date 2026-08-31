@@ -18,6 +18,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { TeacherCreateModal } from "@/components/TeacherCreateModal";
+import { LenguajeModuleView } from "@/components/LenguajeModuleView";
 
 interface SubjectViewProps {
   subjectId: SubjectId;
@@ -26,6 +27,7 @@ interface SubjectViewProps {
   onBack: () => void;
   onStartLesson: (lesson: LessonTopic) => void;
   onCreateLesson: (lesson: LessonTopic) => void;
+  onEarnStars?: (stars: number) => void;
 }
 
 export const SubjectView: React.FC<SubjectViewProps> = ({
@@ -35,6 +37,7 @@ export const SubjectView: React.FC<SubjectViewProps> = ({
   onBack,
   onStartLesson,
   onCreateLesson,
+  onEarnStars,
 }) => {
   const subject = SUBJECTS[subjectId];
   const [selectedGrade, setSelectedGrade] = useState<SchoolGrade | "all">("all");
@@ -75,7 +78,7 @@ export const SubjectView: React.FC<SubjectViewProps> = ({
               className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm text-xs font-semibold transition-all mb-2 text-white"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Volver a todas las materias</span>
+              <span>Volver al panel general</span>
             </button>
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-2xl bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-md">
@@ -97,7 +100,7 @@ export const SubjectView: React.FC<SubjectViewProps> = ({
 
           <div className="flex flex-col items-start md:items-end gap-2 shrink-0">
             <span className="px-3.5 py-1.5 rounded-full bg-white/25 backdrop-blur-md text-xs font-bold border border-white/30">
-              {filteredLessons.length} Temas Disponibles
+              {subjectId === "lenguaje" ? "Módulo Integral Activo" : `${filteredLessons.length} Temas`}
             </span>
             {currentRole !== "student" && (
               <Button
@@ -116,45 +119,48 @@ export const SubjectView: React.FC<SubjectViewProps> = ({
         <div className="absolute left-1/2 -top-12 w-32 h-32 bg-white/10 rounded-full blur-lg pointer-events-none" />
       </div>
 
-      {/* Main Content Area */}
-      <div className="bg-white/80 backdrop-blur-sm border border-purple-100 rounded-3xl p-6 sm:p-8 shadow-sm">
-        {/* Controls: Search and Grade Filters */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-purple-50">
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
-            <span className="text-xs font-bold text-purple-400 flex items-center gap-1 shrink-0 mr-1">
-              <Filter className="w-3.5 h-3.5" /> Grado:
-            </span>
-            {(["all", "4to", "5to", "6to"] as const).map((gradeKey) => (
-              <button
-                key={gradeKey}
-                onClick={() => setSelectedGrade(gradeKey)}
-                className={`px-3 py-1 rounded-full text-xs font-semibold transition-all ${
-                  selectedGrade === gradeKey
-                    ? "bg-purple-600 text-white shadow-sm"
-                    : "bg-purple-50 text-purple-700 hover:bg-purple-100"
-                }`}
-              >
-                {gradeKey === "all" ? "Todos los Grados" : `${gradeKey} Primaria`}
-              </button>
-            ))}
+      {/* If Lenguaje: Render the comprehensive specialized interactive module */}
+      {subjectId === "lenguaje" ? (
+        <LenguajeModuleView onEarnStars={onEarnStars} />
+      ) : (
+        /* Standard Subject View for Historia & Matemáticas */
+        <div className="bg-white/80 backdrop-blur-sm border border-purple-100 rounded-3xl p-6 sm:p-8 shadow-sm">
+          {/* Controls: Search and Grade Filters */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-purple-50">
+            <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
+              <span className="text-xs font-bold text-purple-400 flex items-center gap-1 shrink-0 mr-1">
+                <Filter className="w-3.5 h-3.5" /> Grado:
+              </span>
+              {(["all", "4to", "5to", "6to"] as const).map((gradeKey) => (
+                <button
+                  key={gradeKey}
+                  onClick={() => setSelectedGrade(gradeKey)}
+                  className={`px-3 py-1 rounded-full text-xs font-semibold transition-all ${
+                    selectedGrade === gradeKey
+                      ? "bg-purple-600 text-white shadow-sm"
+                      : "bg-purple-50 text-purple-700 hover:bg-purple-100"
+                  }`}
+                >
+                  {gradeKey === "all" ? "Todos los Grados" : `${gradeKey} Primaria`}
+                </button>
+              ))}
+            </div>
+
+            <div className="relative w-full sm:w-64">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-purple-300" />
+              <input
+                type="text"
+                placeholder="Buscar en esta materia..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-9 pr-3 py-1.5 text-xs bg-purple-50/60 border border-purple-100 rounded-full focus:outline-none focus:ring-2 focus:ring-pink-300 text-purple-800 placeholder:text-purple-300"
+              />
+            </div>
           </div>
 
-          <div className="relative w-full sm:w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-purple-300" />
-            <input
-              type="text"
-              placeholder="Buscar en esta materia..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 text-xs bg-purple-50/60 border border-purple-100 rounded-full focus:outline-none focus:ring-2 focus:ring-pink-300 text-purple-800 placeholder:text-purple-300"
-            />
-          </div>
-        </div>
-
-        {/* Interactive Lesson Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredLessons.map((lesson) => {
-            return (
+          {/* Interactive Lesson Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filteredLessons.map((lesson) => (
               <div
                 key={lesson.id}
                 className="group p-5 rounded-3xl bg-gradient-to-b from-white to-purple-50/30 border border-purple-100/90 hover:border-pink-300 hover:shadow-lg transition-all duration-300 flex flex-col justify-between"
@@ -203,28 +209,28 @@ export const SubjectView: React.FC<SubjectViewProps> = ({
                   </Button>
                 </div>
               </div>
-            );
-          })}
+            ))}
 
-          {/* Quick teacher add card */}
-          {currentRole !== "student" && (
-            <div
-              onClick={() => setIsCreateModalOpen(true)}
-              className="p-5 rounded-3xl border-2 border-dashed border-purple-200 bg-purple-50/20 hover:bg-pink-50/30 hover:border-pink-300 transition-all flex flex-col items-center justify-center text-center cursor-pointer min-h-[170px]"
-            >
-              <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mb-2">
-                <PlusCircle className="w-5 h-5" />
+            {/* Quick teacher add card */}
+            {currentRole !== "student" && (
+              <div
+                onClick={() => setIsCreateModalOpen(true)}
+                className="p-5 rounded-3xl border-2 border-dashed border-purple-200 bg-purple-50/20 hover:bg-pink-50/30 hover:border-pink-300 transition-all flex flex-col items-center justify-center text-center cursor-pointer min-h-[170px]"
+              >
+                <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mb-2">
+                  <PlusCircle className="w-5 h-5" />
+                </div>
+                <h4 className="font-bold text-xs text-purple-950">
+                  Añadir Nueva Lección
+                </h4>
+                <p className="text-[11px] text-purple-500 mt-0.5 max-w-[170px]">
+                  Crea preguntas, retos o lecturas para tu clase.
+                </p>
               </div>
-              <h4 className="font-bold text-xs text-purple-950">
-                Añadir Nueva Lección
-              </h4>
-              <p className="text-[11px] text-purple-500 mt-0.5 max-w-[170px]">
-                Crea preguntas, retos o lecturas para tu clase.
-              </p>
-            </div>
-          )}
+            )}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Teacher Create Modal */}
       <TeacherCreateModal

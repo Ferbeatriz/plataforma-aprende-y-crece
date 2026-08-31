@@ -1,19 +1,4 @@
 import React, { useState } from "react";
-import { UserRole, SubjectId, LessonTopic } from "@/types";
-import { Navbar } from "@/components/Navbar";
-import { Sidebar, ActiveView } from "@/components/Sidebar";
-import { SubjectView } from "@/components/SubjectView";
-import { DashboardHome } from "@/components/DashboardHome";
-import { AchievementsView } from "@/components/AchievementsView";
-import { CuriositiesView } from "@/components/CuriositiesView";
-import { ActivityModal } from "@/components/ActivityModal";
-import { MadeWithDyad } from "@/components/made-with-dyad";
-import { INITIAL_LESSONS, MOCK_ACHIEVEMENTS, CURIOSITIES } from "@/data/mockData";
-
-const Index: React.FC = () => {
-  const [currentRole, setCurrentRole] = useState<UserRole>("student");
-  const [selectedSubject, setSelectedSubject]<dyad-write path="src/pages/Index.tsx" description="Root index page integrating activity modal, achievements view, curiosities view, and state persistence">
-import React, { useState } from "react";
 import { UserRole, SubjectId, LessonTopic, AchievementBadge, CuriosityFact } from "@/types";
 import { Navbar } from "@/components/Navbar";
 import { Sidebar, ActiveView } from "@/components/Sidebar";
@@ -62,22 +47,29 @@ const Index: React.FC = () => {
     setActiveLessonModal(lesson);
   };
 
+  const handleEarnStars = (points: number) => {
+    setTotalStars((prev) => {
+      const newTotal = prev + points;
+      // Auto unlock badges if threshold met
+      setAchievements((achList) =>
+        achList.map((ach) => {
+          if (newTotal >= ach.requiredStars && !ach.unlocked) {
+            toast.success(`¡Nueva Medalla Desbloqueada: ${ach.title}! 🏆`, {
+              description: "¡Revisa tu álbum de logros para ver tu nuevo sticker!",
+            });
+            return { ...ach, unlocked: true, unlockedDate: "¡Hoy!" };
+          }
+          return ach;
+        })
+      );
+      return newTotal;
+    });
+  };
+
   const handleLessonComplete = (lessonId: string, points: number) => {
-    setTotalStars((prev) => prev + points);
+    handleEarnStars(points);
     setLessons((prev) =>
       prev.map((l) => (l.id === lessonId ? { ...l, completed: true } : l))
-    );
-    // Auto unlock corresponding badge if conditions met
-    setAchievements((prev) =>
-      prev.map((ach) => {
-        if (totalStars + points >= ach.requiredStars && !ach.unlocked) {
-          toast.success(`¡Nueva Medalla Desbloqueada: ${ach.title}! 🏆`, {
-            description: "¡Revisa tu álbum de logros para ver tu nuevo sticker!",
-          });
-          return { ...ach, unlocked: true, unlockedDate: "¡Hoy!" };
-        }
-        return ach;
-      })
     );
   };
 
@@ -116,6 +108,7 @@ const Index: React.FC = () => {
               onBack={handleNavigateHome}
               onStartLesson={handleStartLesson}
               onCreateLesson={handleCreateLesson}
+              onEarnStars={handleEarnStars}
             />
           ) : activeView === "achievements" ? (
             <AchievementsView
