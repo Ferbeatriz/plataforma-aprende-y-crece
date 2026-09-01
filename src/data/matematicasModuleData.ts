@@ -319,7 +319,7 @@ export const REASONING_CHALLENGES_20: ReasoningChallenge[] = [
     id: 8,
     tableFocus: "Tabla del 5 y 10",
     title: "8. El Tesoro de las Monedas de Piratas",
-    story: "Sofía encuentra un cofre con 14 bolsas. Cada bolsa tiene 5 monedas de plata y 5 monedas de oro. ¿Cuántas monedas en total hay dentro del cofre?",
+    story: "Fernanda encuentra un cofre con 14 bolsas. Cada bolsa tiene 5 monedas de plata y 5 monedas de oro. ¿Cuántas monedas en total hay dentro del cofre?",
     question: "¿Cuántas monedas en total contiene el cofre?",
     steps: ["Monedas por bolsa: 5 + 5 = 10 monedas", "Total en el cofre: 14 bolsas × 10 monedas = 140 monedas"],
     options: [120, 130, 140, 150],
