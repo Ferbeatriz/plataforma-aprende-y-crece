@@ -654,6 +654,7 @@ export interface HistoriaVisualPlaceholder {
   caption: string;
   emoji: string;
   gradientClass: string;
+  imageUrl?: string;
 }
 
 export interface HistoriaStoryBlock {
@@ -671,6 +672,8 @@ export interface HistoriaGodCard {
   natureLink: string;
   emoji: string;
   accentClass: string;
+  imageUrl?: string;
+  imageAlt?: string;
 }
 
 export interface HistoriaReadingLesson {
@@ -735,6 +738,7 @@ export const HISTORIA_EGIPTO_LESSONS: HistoriaReadingLesson[] = [
           emoji: "🏜️",
           gradientClass:
             "bg-gradient-to-br from-amber-100 via-orange-50 to-yellow-100 border-amber-400",
+          imageUrl: "https://images.pexels.com/photos/259834/pexels-photo-259834.jpeg?auto=compress&cs=tinysrgb&w=400",
         },
       },
       {
@@ -792,6 +796,8 @@ export const HISTORIA_EGIPTO_LESSONS: HistoriaReadingLesson[] = [
           "Mira el amanecer: el sol «nace» en el este, cruza el cielo (como Ra en su barca solar) y «muere» al atardecer para viajar por el mundo de abajo y volver a nacer. Es una forma poética de explicar el día y la noche.",
         emoji: "☀️",
         accentClass: "from-amber-100 to-yellow-50 border-amber-300",
+        imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Ra_Budge.svg/400px-Ra_Budge.svg.png",
+        imageAlt: "Dios Ra, el dios del sol en la mitología egipcia",
       },
       {
         name: "Osiris",
@@ -814,6 +820,8 @@ export const HISTORIA_EGIPTO_LESSONS: HistoriaReadingLesson[] = [
           "Isis ayuda a entender el cuidado que la naturaleza (y las personas) necesitan para recuperarse: el agua que riega, el abrigo de la noche, el amor que repara. El río, el viento y la luna aparecen a menudo cerca de su historia.",
         emoji: "🦋",
         accentClass: "from-sky-100 to-indigo-50 border-sky-300",
+        imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Isis_Louvre_Ma_3633.jpg/400px-Isis_Louvre_Ma_3633.jpg",
+        imageAlt: "Diosa Isis, la gran maga y protectora en la mitología egipcia",
       },
       {
         name: "Horus",
@@ -836,6 +844,8 @@ export const HISTORIA_EGIPTO_LESSONS: HistoriaReadingLesson[] = [
           "Los chacales se veían al atardecer cerca del desierto y los cementerios. En vez de temerlos sin más, los egipcios imaginaron un dios que convertía ese límite entre pueblo y desierto en un guía. Anubis explica el respeto por los muertos y el misterio de la noche.",
         emoji: "🐺",
         accentClass: "from-violet-100 to-slate-50 border-violet-300",
+        imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Anubis_standing.svg/400px-Anubis_standing.svg.png",
+        imageAlt: "Dios Anubis, el dios del más allá en la mitología egipcia",
       },
     ],
     blocks: [

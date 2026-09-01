@@ -46,11 +46,21 @@ type SectionTab = "theory" | "multiple-choice" | "true-false" | "written-respons
 
 const VisualPlaceholder: React.FC<{ visual: HistoriaVisualPlaceholder }> = ({ visual }) => (
   <figure
-    className={`my-5 overflow-hidden rounded-3xl border-2 border-dashed ${visual.gradientClass} px-6 py-8 sm:px-10 sm:py-10 text-center shadow-inner`}
+    className={`my-5 overflow-hidden rounded-3xl border-2 border-dashed ${visual.gradientClass} px-6 py-8 sm:px-10 sm:py-10 text-center shadow-inner flex flex-col items-center justify-center`}
   >
-    <div className="mx-auto mb-3 flex h-20 w-20 items-center justify-center rounded-3xl bg-white/80 text-5xl shadow-sm">
-      {visual.emoji}
-    </div>
+    {visual.imageUrl ? (
+      <div className="bg-white p-3 rounded-[20px] shadow-sm mb-4">
+        <img
+          src={visual.imageUrl}
+          alt={visual.title}
+          className="w-[180px] h-auto rounded-[12px] shadow-[0_4px_8px_rgba(0,0,0,0.1)] object-contain"
+        />
+      </div>
+    ) : (
+      <div className="mx-auto mb-3 flex h-20 w-20 items-center justify-center rounded-3xl bg-white/80 text-5xl shadow-sm">
+        {visual.emoji}
+      </div>
+    )}
     <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-amber-800/70">
       Imagen de la lección
     </p>
@@ -95,16 +105,27 @@ const EgyptLessonReader: React.FC<{ lesson: HistoriaReadingLesson }> = ({ lesson
           {lesson.gods.map((god) => (
             <article
               key={god.name}
-              className={`p-5 rounded-3xl bg-gradient-to-br ${god.accentClass} border-2 shadow-sm`}
+              className={`p-5 rounded-3xl bg-gradient-to-br ${god.accentClass} border-2 shadow-sm flex flex-col items-center text-center sm:text-left sm:items-start`}
             >
-              <div className="flex items-center gap-3 mb-3">
-                <span className="text-4xl">{god.emoji}</span>
-                <div>
+              <div className="flex flex-col sm:flex-row items-center gap-3 mb-3 w-full">
+                <span className="text-4xl hidden sm:block">{god.emoji}</span>
+                <div className="flex-1">
                   <h3 className="text-lg font-black text-purple-950">{god.name}</h3>
                   <p className="text-xs font-bold text-purple-800/80">{god.meaning}</p>
                 </div>
               </div>
-              <ul className="space-y-2 text-xs sm:text-sm text-purple-950">
+
+              {god.imageUrl && (
+                <div className="bg-white p-3 rounded-[16px] shadow-sm mb-4 self-center">
+                  <img
+                    src={god.imageUrl}
+                    alt={god.imageAlt || god.name}
+                    className="w-[180px] h-auto rounded-[12px] shadow-[0_4px_8px_rgba(0,0,0,0.1)] object-contain"
+                  />
+                </div>
+              )}
+
+              <ul className="space-y-2 text-xs sm:text-sm text-purple-950 w-full">
                 <li>
                   <span className="font-extrabold">Poderes: </span>
                   {god.powers}
