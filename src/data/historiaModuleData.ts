@@ -641,3 +641,214 @@ export const HISTORIA_DATA: Record<"grecia" | "roma", CivilizationData> = {
     ],
   },
 };
+
+/* ------------------------------------------------------------------ */
+/*  Antiguo Egipto — lecciones de lectura (8 a 12 años)               */
+/* ------------------------------------------------------------------ */
+
+export type EgyptLessonId = "viaje-egipto" | "dioses-egipcios";
+
+export interface HistoriaVisualPlaceholder {
+  id: string;
+  title: string;
+  caption: string;
+  emoji: string;
+  gradientClass: string;
+}
+
+export interface HistoriaStoryBlock {
+  heading: string;
+  icon: string;
+  paragraphs: string[];
+  visual?: HistoriaVisualPlaceholder;
+}
+
+export interface HistoriaGodCard {
+  name: string;
+  meaning: string;
+  powers: string;
+  importance: string;
+  natureLink: string;
+  emoji: string;
+  accentClass: string;
+}
+
+export interface HistoriaReadingLesson {
+  id: EgyptLessonId;
+  title: string;
+  subtitle: string;
+  badge: string;
+  icon: string;
+  cardDescription: string;
+  introduction: string;
+  blocks: HistoriaStoryBlock[];
+  gods?: HistoriaGodCard[];
+  timelineNote?: string;
+  closing: string;
+}
+
+export const HISTORIA_EGIPTO_LESSONS: HistoriaReadingLesson[] = [
+  {
+    id: "viaje-egipto",
+    title: "El Viaje por el Tiempo en el Antiguo Egipto",
+    subtitle: "Del Nilo predinástico a Cleopatra y Roma",
+    badge: "Aventura en el Nilo 🪲",
+    icon: "🪲",
+    cardDescription:
+      "Un cuento-viaje: aldeas junto al río, pirámides de piedra y la última reina antes de Roma.",
+    introduction:
+      "Imagina que abres un cofre de arena dorada y, dentro, brilla un escarabajo de vidrio verde. Lo tocas… y el suelo se vuelve suave como el lodo del río. El viento huele a papiro y a pan recién horneado. Una voz amable te susurra: «Bienvenida, viajera del tiempo. Te llevaré por el Antiguo Egipto, de las primeras aldeas hasta una reina que desafió al Imperio Romano». Toma aire. El Nilo ya está esperándote.",
+    blocks: [
+      {
+        heading: "Cuando el río era el primer maestro",
+        icon: "🌾",
+        paragraphs: [
+          "Hace más de cinco mil años —mucho antes de que existieran las grandes pirámides— la gente vivía en aldeas a orillas de un río larguísimo. No había un solo país llamado Egipto todavía. Había familias que pescaban, sembraban y observaban el cielo como si fuera un reloj enorme.",
+          "Cada año el Nilo crecía, se desbordaba y dejaba sobre la tierra un barro oscuro y fértil, como si el río regalara un manto de chocolate para las plantas. Cuando las aguas bajaban, se sembraba trigo y cebada. Las niñas y los niños aprendían a contar las estaciones no con un calendario de pared, sino mirando el río: inundación, siembra y cosecha.",
+          "Ese tiempo se llama periodo predinástico: la época «antes de los reyes de las dos tierras». Al norte, cerca del mar, el Delta se abría como un abanico verde. Al sur, el valle era un camino estrecho entre desiertos. Poco a poco las aldeas se unieron, aprendieron a trabajar el cobre, pintaron cerámica y soñaron con un líder que uniera todo el río.",
+          "La leyenda cuenta que un gran unificador —a menudo llamado Narmer o Menes— juntó el Alto y el Bajo Egipto hacia el año 3100 antes de Cristo. Desde entonces, el faraón llevaba una corona doble: el blanco del sur y el rojo del norte. Egipto dejó de ser un puñado de aldeas y se convirtió en un reino con escritura, templos y un sueño compartido: que el orden, llamado maat, no se rompiera nunca.",
+        ],
+        visual: {
+          id: "nilo",
+          title: "El Río Nilo",
+          caption:
+            "Marcador de imagen: el río más famoso de África, cinta de vida entre dos desiertos, con barcas de papiro y orillas verdes.",
+          emoji: "🌊",
+          gradientClass:
+            "bg-gradient-to-br from-sky-100 via-teal-50 to-emerald-100 border-teal-300",
+        },
+      },
+      {
+        heading: "Montañas para el cielo: las pirámides",
+        icon: "🔺",
+        paragraphs: [
+          "Pasan los siglos. El reino crece. Los faraones quieren una casa eterna para su ka —la chispa de vida que, según creían, seguía existiendo después de la muerte—. Primero se construyeron mastabas, tumbas planas como mesas de adobe. Luego, el arquitecto Imhotep imaginó una pirámide escalonada en Saqqara, como una escalera para subir hacia las estrellas.",
+          "Más tarde, cerca del año 2600 antes de Cristo, en la meseta de Giza, se alzaron las pirámides más famosas del mundo. La Gran Pirámide del faraón Keops (Jufu) era un rompecabezas de millones de bloques. Junto a ella crecieron las de Kefrén y Micerino, y la Gran Esfinge, un león con rostro humano que parece guardar el horizonte.",
+          "¿Quién las construyó? No un ejército de «magos de la noche», sino miles de personas organizadas: canteros, carpinteros, panaderos, médicos y agricultores que, cuando el Nilo inundaba los campos y no se podía sembrar, ofrecían su trabajo al Estado. Vivían en poblados cerca de la obra, comían pan, cebolla y pescado, y dejaron grafitis alegres en las piedras, como firmas de equipos.",
+          "Las pirámides no eran solo tumbas: eran máquinas de eternidad. Orientadas con el sol y las estrellas, decían al universo: «Aquí descansa un rey que mantiene el equilibrio del mundo». Aun hoy, si cierras los ojos frente a ellas, sientes el silencio del desierto y el rumor lejano del río que lo hizo posible.",
+        ],
+        visual: {
+          id: "piramides",
+          title: "Las Pirámides de Giza",
+          caption:
+            "Marcador de imagen: tres triángulos de piedra bajo un cielo de atardecer, con la Esfinge al acecho y arena dorada a sus pies.",
+          emoji: "🏜️",
+          gradientClass:
+            "bg-gradient-to-br from-amber-100 via-orange-50 to-yellow-100 border-amber-400",
+        },
+      },
+      {
+        heading: "Templos, reinas y un país que no se detuvo",
+        icon: "🛕",
+        paragraphs: [
+          "Después del Imperio Antiguo vinieron tiempos de división y de reunificación. En el Imperio Medio, Egipto volvió a florecer con literatura, fuertes y canales. En el Imperio Nuevo —más o menos entre los años 1550 y 1070 antes de Cristo— los faraones gobernaron desde Tebas y construyeron templos enormes como Karnak y Luxor, donde las columnas parecían un bosque de piedra.",
+          "Hubo reinas extraordinarias. Hatshepsut gobernó con corona de faraón y envió expediciones a tierras lejanas en busca de incienso y árboles extraños. Nefertiti aparece en un busto tan famoso que parece que todavía está a punto de hablar. Un niño rey, Tutankamón, durmió más de tres mil años con un máscara de oro hasta que el mundo moderno lo redescubrió.",
+          "Los escribas —muchas veces varones, pero con niñas que también aprendían en casas nobles— copiaban historias en papiro. Los médicos mezclaban hierbas y hechizos. En las casas se jugaba al senet, un juego de tablero. Las fiestas olían a loto y a aceite perfumado. Egipto no era solo piedra: era gente riendo, trabajando y soñando junto al río.",
+        ],
+      },
+      {
+        heading: "Cleopatra y el último latido antes de Roma",
+        icon: "👑",
+        paragraphs: [
+          "Llegan siglos más tardíos. Otros pueblos entran en escena: asirios, persas… y luego un joven conquistador llamado Alejandro Magno. Tras él, una familia griega, los Ptolomeos, gobierna Egipto desde Alejandría, una ciudad de faro legendario y de una biblioteca que quería guardar todos los saberes del mundo.",
+          "En esa corte nace la protagonista más famosa del final: Cleopatra VII. No era una villana de cuento ni solo «la reina hermosa». Era una estratega brillante, hablaba varios idiomas y conocía el Nilo mejor que muchos generales. Se alió primero con Julio César y después con Marco Antonio, dos líderes de Roma, porque su misión era proteger la independencia de Egipto en un mundo donde Roma se tragaba reinos como quien recoge fichas de un juego.",
+          "Roma, sin embargo, tenía otro jugador: Octavio, que más tarde sería el emperador Augusto. En el año 31 antes de Cristo, en una batalla naval cerca de Accio, la flota de Cleopatra y Antonio perdió. Al año siguiente, en el 30 antes de Cristo, Alejandría cayó. Cleopatra murió y Egipto dejó de ser un reino propio: se convirtió en provincia del Imperio Romano.",
+          "El escarabajo de vidrio tiembla en tu mano. El viaje termina en un muelle de Alejandría, con el mar Mediterráneo brillando. El Nilo sigue fluyendo, las pirámides siguen en pie y el nombre de Cleopatra sigue encendiendo la imaginación. El tiempo no se llevó a Egipto: lo convirtió en una historia que ahora también es tuya.",
+        ],
+        visual: {
+          id: "cleopatra",
+          title: "Cleopatra VII",
+          caption:
+            "Marcador de imagen: la última reina de Egipto, con diadema real y el faro de Alejandría al fondo, mirando el Mediterráneo.",
+          emoji: "👑",
+          gradientClass:
+            "bg-gradient-to-br from-fuchsia-100 via-rose-50 to-amber-100 border-rose-300",
+        },
+      },
+    ],
+    closing:
+      "Has viajado desde las aldeas predinásticas, cruzado el Nilo, tocado (con la imaginación) las pirámides y saludado a Cleopatra en el umbral de Roma. Cuando quieras, abre la siguiente lección: el Gran Salón de los Dioses, donde el sol, el río y la noche tienen nombres.",
+  },
+  {
+    id: "dioses-egipcios",
+    title: "El Gran Salón de los Dioses Egipcios",
+    subtitle: "Mitología para entender la naturaleza",
+    badge: "Mitología amable ☀️",
+    icon: "☀️",
+    cardDescription:
+      "Ra, Osiris, Isis, Horus y Anubis: nombres, poderes y por qué ayudaban a explicar el mundo.",
+    introduction:
+      "Empujas una puerta de cedro pintada de azul y oro. Estás en un salón silencioso, fresco como el interior de un templo. En las paredes, estrellas. En el suelo, un río pintado. Cinco figuras te esperan: no para asustarte, sino para contarte cómo el pueblo egipcio entendía el sol, las plantas, el cielo, el cuidado y el misterio de la muerte. Esta lección es independiente: puedes leerla aunque aún no hayas hecho el viaje por el tiempo.",
+    timelineNote:
+      "Estos dioses se adoraron durante más de 3.000 años. Un truco para recordarlo: imagina una línea desde cerca del año 3000 antes de Cristo (cuando nacían los primeros reinos junto al Nilo) hasta alrededor del año 400 después de Cristo (cuando el Imperio Romano ya existía y muchos templos se fueron cerrando). Eso es más tiempo que desde la llegada de Colón a América hasta hoy… ¡multiplicado y todavía sobra! Por eso sus historias se pintaron mil veces en tumbas, papiros y templos.",
+    gods: [
+      {
+        name: "Ra",
+        meaning: "El sol que viaja y da la vida",
+        powers: "Luz, calor, el ciclo del día y la noche, la creación que se renueva cada amanecer.",
+        importance:
+          "Ra era el gran dios solar. Sin su viaje cotidiano, pensaban, el mundo se apagaría. Los faraones se decían «hijos de Ra» para mostrar que su poder venía del orden del cielo.",
+        natureLink:
+          "Mira el amanecer: el sol «nace» en el este, cruza el cielo (como Ra en su barca solar) y «muere» al atardecer para viajar por el mundo de abajo y volver a nacer. Es una forma poética de explicar el día y la noche.",
+        emoji: "☀️",
+        accentClass: "from-amber-100 to-yellow-50 border-amber-300",
+      },
+      {
+        name: "Osiris",
+        meaning: "El señor de la renovación y del Más Allá",
+        powers: "Renacimiento, justicia de los muertos, la fuerza que hace volver verdes los campos.",
+        importance:
+          "Osiris fue un rey mítico que murió y volvió a la vida gracias al amor y la magia de Isis. Se convirtió en juez y rey del mundo de los muertos, prometiendo que la vida podía continuar de otro modo.",
+        natureLink:
+          "Cuando el Nilo inundaba y luego bajaba, la tierra parecía «morir» y «renacer» con brotes nuevos. Osiris, a menudo pintado con piel verde, era esa esperanza agrícola: lo que se entierra puede volver a crecer.",
+        emoji: "🌿",
+        accentClass: "from-emerald-100 to-teal-50 border-emerald-300",
+      },
+      {
+        name: "Isis",
+        meaning: "La gran maga, madre y protectora",
+        powers: "Magia sanadora, protección de niñas y niños, lealtad familiar, sabiduría para recomponer lo roto.",
+        importance:
+          "Isis buscó los pedazos de Osiris y, con su poder, le devolvió la vida el tiempo suficiente para que naciera Horus. Era el modelo de cuidado inteligente: no solo llora, también actúa, estudia y protege.",
+        natureLink:
+          "Isis ayuda a entender el cuidado que la naturaleza (y las personas) necesitan para recuperarse: el agua que riega, el abrigo de la noche, el amor que repara. El río, el viento y la luna aparecen a menudo cerca de su historia.",
+        emoji: "🦋",
+        accentClass: "from-sky-100 to-indigo-50 border-sky-300",
+      },
+      {
+        name: "Horus",
+        meaning: "El cielo con alas de halcón",
+        powers: "La realeza justa, la vista aguda, la protección del trono y el combate contra el caos.",
+        importance:
+          "Horus, hijo de Isis y Osiris, era el halcón que miraba el mundo desde arriba. Cada faraón vivo se presentaba como «Horus en la Tierra»: un recordatorio de que gobernar era cuidar, no solo mandar. El Ojo de Horus se usaba como amuleto de salud y plenitud.",
+        natureLink:
+          "El cielo diurno, el vuelo de las aves y la idea de «ver claro» (como un halcón) se unen en Horus. Su ojo herido y sanado también habla de la luna que mengua y crece.",
+        emoji: "🦅",
+        accentClass: "from-orange-100 to-rose-50 border-orange-300",
+      },
+      {
+        name: "Anubis",
+        meaning: "El guía amable de los caminos invisibles",
+        powers: "Momificación, protección de las tumbas, acompañar a las almas y pesar el corazón con la verdad.",
+        importance:
+          "Anubis, con cabeza de chacal, no era un «villano oscuro». Era un cuidador. Preparaba el cuerpo para el viaje y, en el juicio, vigilaba que el corazón se pesara contra la pluma de la verdad (Maat). Si el corazón era ligero, el alma podía seguir.",
+        natureLink:
+          "Los chacales se veían al atardecer cerca del desierto y los cementerios. En vez de temerlos sin más, los egipcios imaginaron un dios que convertía ese límite entre pueblo y desierto en un guía. Anubis explica el respeto por los muertos y el misterio de la noche.",
+        emoji: "🐺",
+        accentClass: "from-violet-100 to-slate-50 border-violet-300",
+      },
+    ],
+    blocks: [
+      {
+        heading: "¿Por qué inventaron (y amaron) estos relatos?",
+        icon: "🌌",
+        paragraphs: [
+          "La mitología egipcia no era un videojuego de superhéroes: era una forma de conversar con la naturaleza. El sol sale y se pone. El río crece y baja. Las plantas se secan y vuelven. Las personas nacen, viven y mueren. Ponerle un nombre y una historia a cada fuerza ayudaba a no sentirse sola frente al desierto inmenso.",
+          "Había muchos más dioses —Hathor de la alegría, Thot de la escritura, Bastet de la protección hogareña—, pero este salón te presenta cinco pilares. Si los recuerdas, ya puedes explicar con tus palabras cómo un pueblo antiguo unió ciencia observada (el Nilo, el sol, las estrellas) con poesía sagrada.",
+        ],
+      },
+    ],
+    closing:
+      "Cierra la puerta del salón con suavidad. Ra seguirá cruzando el cielo mañana; Osiris e Isis seguirán hablando de renovación y cuidado; Horus vigilará el horizonte; Anubis cuidará los umbrales. Más de tres mil años de historias caben ahora en tu memoria… y en tu manera de mirar el río, el sol y la noche.",
+  },
+];

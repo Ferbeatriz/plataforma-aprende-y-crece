@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { HISTORIA_DATA, CivilizationData, MultipleChoiceItem, TrueFalseItem, WrittenPromptItem } from "@/data/historiaModuleData";
+import {
+  HISTORIA_DATA,
+  HISTORIA_EGIPTO_LESSONS,
+  CivilizationData,
+  WrittenPromptItem,
+  HistoriaReadingLesson,
+  HistoriaVisualPlaceholder,
+  EgyptLessonId,
+} from "@/data/historiaModuleData";
 import {
   Landmark,
   BookOpen,
@@ -33,14 +41,123 @@ interface HistoriaModuleViewProps {
 }
 
 type CivKey = "grecia" | "roma";
+type HistoriaUnitKey = CivKey | EgyptLessonId;
 type SectionTab = "theory" | "multiple-choice" | "true-false" | "written-response";
 
+const VisualPlaceholder: React.FC<{ visual: HistoriaVisualPlaceholder }> = ({ visual }) => (
+  <figure
+    className={`my-5 overflow-hidden rounded-3xl border-2 border-dashed ${visual.gradientClass} px-6 py-8 sm:px-10 sm:py-10 text-center shadow-inner`}
+  >
+    <div className="mx-auto mb-3 flex h-20 w-20 items-center justify-center rounded-3xl bg-white/80 text-5xl shadow-sm">
+      {visual.emoji}
+    </div>
+    <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-amber-800/70">
+      Imagen de la lección
+    </p>
+    <h4 className="mt-1.5 text-lg font-black text-purple-950">{visual.title}</h4>
+    <figcaption className="mx-auto mt-2 max-w-md text-xs leading-relaxed text-purple-800/80">
+      {visual.caption}
+    </figcaption>
+  </figure>
+);
+
+const EgyptLessonReader: React.FC<{ lesson: HistoriaReadingLesson }> = ({ lesson }) => (
+  <div className="space-y-6 animate-in fade-in">
+    <div className="bg-white rounded-3xl p-6 sm:p-8 border border-amber-200/90 shadow-sm">
+      <div className="flex items-center gap-3 mb-4">
+        <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center text-3xl shadow-2xs">
+          {lesson.icon}
+        </div>
+        <div>
+          <span className="text-[11px] font-extrabold tracking-wider uppercase text-amber-600">
+            Unidad de Historia Universal • 4°, 5° y 6° Primaria
+          </span>
+          <h2 className="text-xl sm:text-2xl font-black text-purple-950">{lesson.title}</h2>
+          <p className="text-xs text-purple-700/80 font-medium">{lesson.subtitle}</p>
+        </div>
+      </div>
+
+      <p className="text-sm sm:text-base text-purple-900 leading-relaxed bg-amber-50/50 p-4 sm:p-5 rounded-2xl border border-amber-100 mb-6 font-medium">
+        {lesson.introduction}
+      </p>
+
+      {lesson.timelineNote && (
+        <div className="mb-6 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-violet-50 to-amber-50 border border-violet-200">
+          <p className="text-xs font-extrabold uppercase tracking-wider text-violet-700 mb-1">
+            Línea de tiempo amigable
+          </p>
+          <p className="text-sm text-purple-900 leading-relaxed">{lesson.timelineNote}</p>
+        </div>
+      )}
+
+      {lesson.gods && lesson.gods.length > 0 && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+          {lesson.gods.map((god) => (
+            <article
+              key={god.name}
+              className={`p-5 rounded-3xl bg-gradient-to-br ${god.accentClass} border-2 shadow-sm`}
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <span className="text-4xl">{god.emoji}</span>
+                <div>
+                  <h3 className="text-lg font-black text-purple-950">{god.name}</h3>
+                  <p className="text-xs font-bold text-purple-800/80">{god.meaning}</p>
+                </div>
+              </div>
+              <ul className="space-y-2 text-xs sm:text-sm text-purple-950">
+                <li>
+                  <span className="font-extrabold">Poderes: </span>
+                  {god.powers}
+                </li>
+                <li>
+                  <span className="font-extrabold">Importancia: </span>
+                  {god.importance}
+                </li>
+                <li>
+                  <span className="font-extrabold">En la naturaleza: </span>
+                  {god.natureLink}
+                </li>
+              </ul>
+            </article>
+          ))}
+        </div>
+      )}
+
+      <div className="space-y-5">
+        {lesson.blocks.map((block, idx) => (
+          <div
+            key={idx}
+            className="p-5 sm:p-6 rounded-3xl bg-purple-50/30 border border-purple-100 hover:border-amber-300 transition-all"
+          >
+            <h3 className="text-base font-extrabold text-purple-950 flex items-center gap-2 mb-2">
+              <span className="text-xl">{block.icon}</span>
+              {block.heading}
+            </h3>
+            {block.paragraphs.map((p, pIdx) => (
+              <p key={pIdx} className="text-xs sm:text-sm text-purple-900/90 leading-relaxed mb-3 last:mb-0">
+                {p}
+              </p>
+            ))}
+            {block.visual && <VisualPlaceholder visual={block.visual} />}
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-8 pt-6 border-t border-purple-100 bg-gradient-to-r from-amber-100/70 via-pink-100/60 to-purple-100/70 p-5 rounded-3xl">
+        <p className="text-sm text-purple-950 leading-relaxed font-medium">{lesson.closing}</p>
+      </div>
+    </div>
+  </div>
+);
+
 export const HistoriaModuleView: React.FC<HistoriaModuleViewProps> = ({ onEarnStars }) => {
-  const [selectedCiv, setSelectedCiv] = useState<CivKey>("grecia");
+  const [selectedUnit, setSelectedUnit] = useState<HistoriaUnitKey>("viaje-egipto");
   const [activeTab, setActiveTab] = useState<SectionTab>("theory");
 
-  // Current active civilization dataset
+  const isClassicCiv = selectedUnit === "grecia" || selectedUnit === "roma";
+  const selectedCiv: CivKey = isClassicCiv ? selectedUnit : "grecia";
   const currentCivData: CivilizationData = HISTORIA_DATA[selectedCiv];
+  const egyptLesson = HISTORIA_EGIPTO_LESSONS.find((lesson) => lesson.id === selectedUnit);
 
   // --- MULTIPLE CHOICE STATE (Independent per civ) ---
   const [mcSelected, setMcSelected] = useState<Record<string, Record<number, number>>>({
@@ -309,17 +426,50 @@ export const HistoriaModuleView: React.FC<HistoriaModuleViewProps> = ({ onEarnSt
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
       {/* ======================================================== */}
-      {/* 1. SELECCIÓN DE CIVILIZACIÓN (GRECIA VS ROMA) */}
+      {/* 1. SELECCIÓN DE LECCIONES */}
       {/* ======================================================== */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {HISTORIA_EGIPTO_LESSONS.map((lesson) => {
+          const isActive = selectedUnit === lesson.id;
+          return (
+            <button
+              key={lesson.id}
+              onClick={() => {
+                setSelectedUnit(lesson.id);
+                setActiveTab("theory");
+              }}
+              className={`p-5 rounded-3xl border-2 transition-all flex items-center gap-4 text-left shadow-sm ${
+                isActive
+                  ? "bg-gradient-to-r from-amber-100 via-orange-50 to-pink-50 border-amber-400 ring-2 ring-amber-200 shadow-md scale-[1.01]"
+                  : "bg-white/80 border-purple-100 hover:border-amber-200 hover:bg-amber-50/40"
+              }`}
+            >
+              <div className="w-14 h-14 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center text-3xl shadow-sm shrink-0">
+                {lesson.icon}
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-1 flex-wrap">
+                  <span className="font-black text-base text-purple-950">{lesson.title}</span>
+                  {isActive && (
+                    <Badge className="bg-amber-200 text-amber-900 border-none text-[10px] font-bold">
+                      Activa
+                    </Badge>
+                  )}
+                </div>
+                <p className="text-xs text-gray-600 line-clamp-2">{lesson.cardDescription}</p>
+              </div>
+            </button>
+          );
+        })}
+
         {/* Antigua Grecia Button */}
         <button
           onClick={() => {
-            setSelectedCiv("grecia");
+            setSelectedUnit("grecia");
             setActiveTab("theory");
           }}
           className={`p-5 rounded-3xl border-2 transition-all flex items-center gap-4 text-left shadow-sm ${
-            selectedCiv === "grecia"
+            selectedUnit === "grecia"
               ? "bg-gradient-to-r from-amber-100 via-orange-50 to-pink-50 border-amber-400 ring-2 ring-amber-200 shadow-md scale-[1.01]"
               : "bg-white/80 border-purple-100 hover:border-amber-200 hover:bg-amber-50/40"
           }`}
@@ -330,7 +480,7 @@ export const HistoriaModuleView: React.FC<HistoriaModuleViewProps> = ({ onEarnSt
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
               <span className="font-black text-base text-purple-950">Antigua Grecia</span>
-              {selectedCiv === "grecia" && (
+              {selectedUnit === "grecia" && (
                 <Badge className="bg-amber-200 text-amber-900 border-none text-[10px] font-bold">
                   Activa
                 </Badge>
@@ -345,11 +495,11 @@ export const HistoriaModuleView: React.FC<HistoriaModuleViewProps> = ({ onEarnSt
         {/* Antigua Roma Button */}
         <button
           onClick={() => {
-            setSelectedCiv("roma");
+            setSelectedUnit("roma");
             setActiveTab("theory");
           }}
           className={`p-5 rounded-3xl border-2 transition-all flex items-center gap-4 text-left shadow-sm ${
-            selectedCiv === "roma"
+            selectedUnit === "roma"
               ? "bg-gradient-to-r from-rose-100 via-pink-50 to-purple-50 border-rose-400 ring-2 ring-rose-200 shadow-md scale-[1.01]"
               : "bg-white/80 border-purple-100 hover:border-rose-200 hover:bg-rose-50/40"
           }`}
@@ -360,7 +510,7 @@ export const HistoriaModuleView: React.FC<HistoriaModuleViewProps> = ({ onEarnSt
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
               <span className="font-black text-base text-purple-950">Antigua Roma</span>
-              {selectedCiv === "roma" && (
+              {selectedUnit === "roma" && (
                 <Badge className="bg-rose-200 text-rose-900 border-none text-[10px] font-bold">
                   Activa
                 </Badge>
@@ -373,6 +523,10 @@ export const HistoriaModuleView: React.FC<HistoriaModuleViewProps> = ({ onEarnSt
         </button>
       </div>
 
+      {!isClassicCiv && egyptLesson && <EgyptLessonReader lesson={egyptLesson} />}
+
+      {isClassicCiv && (
+        <>
       {/* ======================================================== */}
       {/* 2. SUB-NAVIGATION TABS (LECCIÓN, TEST 10, V/F 7, ESCRITAS 5) */}
       {/* ======================================================== */}
@@ -1026,6 +1180,8 @@ export const HistoriaModuleView: React.FC<HistoriaModuleViewProps> = ({ onEarnSt
             })}
           </div>
         </div>
+      )}
+        </>
       )}
     </div>
   );

@@ -85,7 +85,7 @@ export const SubjectView: React.FC<SubjectViewProps> = ({
               {subjectId === "lenguaje"
                 ? "Módulo Integral Activo"
                 : subjectId === "historia"
-                ? "Grecia & Roma Activo"
+                ? "Egipto, Grecia y Roma"
                 : "Propiedades & Carrera Activo"}
             </span>
             {currentRole !== "student" && (
