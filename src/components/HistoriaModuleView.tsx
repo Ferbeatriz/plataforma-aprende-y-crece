@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { GlosarioDiosesView } from "./GlosarioDiosesView";
 import {
   HISTORIA_DATA,
   HISTORIA_EGIPTO_LESSONS,
@@ -451,37 +452,38 @@ export const HistoriaModuleView: React.FC<HistoriaModuleViewProps> = ({ onEarnSt
       {/* ======================================================== */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {HISTORIA_EGIPTO_LESSONS.map((lesson) => {
-          const isActive = selectedUnit === lesson.id;
-          return (
-            <button
-              key={lesson.id}
-              onClick={() => {
-                setSelectedUnit(lesson.id);
-                setActiveTab("theory");
-              }}
-              className={`p-5 rounded-3xl border-2 transition-all flex items-center gap-4 text-left shadow-sm ${
-                isActive
-                  ? "bg-gradient-to-r from-amber-100 via-orange-50 to-pink-50 border-amber-400 ring-2 ring-amber-200 shadow-md scale-[1.01]"
-                  : "bg-white/80 border-purple-100 hover:border-amber-200 hover:bg-amber-50/40"
-              }`}
-            >
-              <div className="w-14 h-14 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center text-3xl shadow-sm shrink-0">
-                {lesson.icon}
-              </div>
-              <div className="flex-1">
-                <div className="flex items-center gap-2 mb-1 flex-wrap">
-                  <span className="font-black text-base text-purple-950">{lesson.title}</span>
-                  {isActive && (
-                    <Badge className="bg-amber-200 text-amber-900 border-none text-[10px] font-bold">
-                      Activa
-                    </Badge>
-                  )}
-                </div>
-                <p className="text-xs text-gray-600 line-clamp-2">{lesson.cardDescription}</p>
-              </div>
-            </button>
-          );
+          // ... existing code ...
         })}
+
+        {/* Glosario de Dioses Egipcios Button */}
+        <button
+          onClick={() => {
+            setSelectedUnit("glosario-dioses");
+            setActiveTab("theory");
+          }}
+          className={`p-5 rounded-3xl border-2 transition-all flex items-center gap-4 text-left shadow-sm ${
+            selectedUnit === "glosario-dioses"
+              ? "bg-gradient-to-r from-purple-100 via-indigo-50 to-blue-50 border-purple-400 ring-2 ring-purple-200 shadow-md scale-[1.01]"
+              : "bg-white/80 border-purple-100 hover:border-purple-200 hover:bg-purple-50/40"
+          }`}
+        >
+          <div className="w-14 h-14 rounded-2xl bg-purple-100 text-purple-800 flex items-center justify-center text-3xl shadow-sm shrink-0">
+            📜
+          </div>
+          <div className="flex-1">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="font-black text-base text-purple-950">Glosario de Dioses</span>
+              {selectedUnit === "glosario-dioses" && (
+                <Badge className="bg-purple-200 text-purple-900 border-none text-[10px] font-bold">
+                  Activa
+                </Badge>
+              )}
+            </div>
+            <p className="text-xs text-gray-600 line-clamp-2">
+              Diccionario ilustrado con todos los dioses, sus formas y poderes mágicos.
+            </p>
+          </div>
+        </button>
 
         {/* Antigua Grecia Button */}
         <button
@@ -544,7 +546,8 @@ export const HistoriaModuleView: React.FC<HistoriaModuleViewProps> = ({ onEarnSt
         </button>
       </div>
 
-      {!isClassicCiv && egyptLesson && <EgyptLessonReader lesson={egyptLesson} />}
+      {!isClassicCiv && selectedUnit === "glosario-dioses" && <GlosarioDiosesView />}
+      {!isClassicCiv && selectedUnit !== "glosario-dioses" && egyptLesson && <EgyptLessonReader lesson={egyptLesson} />}
 
       {isClassicCiv && (
         <>

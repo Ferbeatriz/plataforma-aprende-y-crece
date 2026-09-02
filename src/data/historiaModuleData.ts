@@ -646,7 +646,7 @@ export const HISTORIA_DATA: Record<"grecia" | "roma", CivilizationData> = {
 /*  Antiguo Egipto — lecciones de lectura (8 a 12 años)               */
 /* ------------------------------------------------------------------ */
 
-export type EgyptLessonId = "viaje-egipto" | "dioses-egipcios";
+export type EgyptLessonId = "viaje-egipto" | "dioses-egipcios" | "glosario-dioses";
 
 export interface HistoriaVisualPlaceholder {
   id: string;
