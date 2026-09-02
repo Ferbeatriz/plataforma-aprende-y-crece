@@ -10,7 +10,7 @@ interface Dios {
   sinopsis: string;
 }
 
-const GlosarioDiosesView: React.FC = () => {
+export const GlosarioDiosesView: React.FC = () => {
   // Usar los datos importados del JSON
   const dioses: Dios[] = diosesData;
 
