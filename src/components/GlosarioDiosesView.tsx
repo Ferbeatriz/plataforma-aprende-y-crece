@@ -10,7 +10,7 @@ interface Dios {
   sinopsis: string;
 }
 
-const GlosarioDiosesView: React.FC = () => {
+export const GlosarioDiosesView: React.FC = () => {
   const dioses: Dios[] = diosesData;
   const [selectedGod, setSelectedGod] = useState<Dios | null>(null);
 
