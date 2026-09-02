@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { diosesData } from '../data/glosarioDioses';
+import { imagenesDioses } from '../data/imagenesDioses';
 
 interface Dios {
   nombre: string;
@@ -14,14 +15,18 @@ export const GlosarioDiosesView: React.FC = () => {
   const dioses: Dios[] = diosesData;
   const [selectedGod, setSelectedGod] = useState<Dios | null>(null);
 
-  // Función para abrir el modal
   const openModal = (dios: Dios) => {
     setSelectedGod(dios);
   };
 
-  // Función para cerrar el modal
   const closeModal = () => {
     setSelectedGod(null);
+  };
+
+  // 🔑 FUNCIÓN PARA OBTENER LA IMAGEN DEL DIOS
+  const getImageUrl = (nombre: string): string => {
+    // Buscar la imagen en el mapeo, o usar una imagen por defecto
+    return imagenesDioses[nombre] || 'https://via.placeholder.com/150x150?text=Sin+imagen';
   };
 
   return (
@@ -39,32 +44,43 @@ export const GlosarioDiosesView: React.FC = () => {
           <div
             key={index}
             onClick={() => openModal(dios)}
-            className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 hover:shadow-lg hover:border-blue-400 transition-all cursor-pointer"
+            className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 hover:shadow-lg hover:border-blue-400 transition-all cursor-pointer flex flex-col"
           >
-            <div className="p-4">
-              <h2 className="text-xl font-bold text-blue-800">{dios.nombre}</h2>
-              <div className="mt-2 space-y-1 text-sm">
-                <p><span className="font-semibold">Nombre egipcio:</span> {dios.nombreEgipcio || 'No especificado'}</p>
-                <p><span className="font-semibold">Representación:</span> {dios.representacion || 'No especificado'}</p>
+            <div className="flex p-4">
+              {/* Imagen a la izquierda */}
+              <div className="flex-shrink-0 mr-4">
+                <img
+                  src={getImageUrl(dios.nombre)}
+                  alt={dios.nombre}
+                  className="w-24 h-24 object-cover rounded-lg border border-gray-200"
+                />
               </div>
-              <div className="mt-3">
-                <p className="text-gray-700 text-sm leading-relaxed">
-                  {dios.sinopsis ? (
-                    <span>{dios.sinopsis.substring(0, 120)}...</span>
-                  ) : (
-                    <span className="text-gray-400">Sinopsis no disponible</span>
-                  )}
-                </p>
-              </div>
-              <div className="mt-3 text-blue-500 text-sm font-medium">
-                Haz clic para leer más →
+              {/* Información a la derecha */}
+              <div className="flex-1">
+                <h2 className="text-xl font-bold text-blue-800">{dios.nombre}</h2>
+                <div className="mt-1 space-y-1 text-sm">
+                  <p><span className="font-semibold">Nombre egipcio:</span> {dios.nombreEgipcio || 'No especificado'}</p>
+                  <p><span className="font-semibold">Representación:</span> {dios.representacion || 'No especificado'}</p>
+                </div>
+                <div className="mt-2">
+                  <p className="text-gray-700 text-xs leading-relaxed">
+                    {dios.sinopsis ? (
+                      <span>{dios.sinopsis.substring(0, 80)}...</span>
+                    ) : (
+                      <span className="text-gray-400">Sinopsis no disponible</span>
+                    )}
+                  </p>
+                </div>
+                <div className="mt-2 text-blue-500 text-xs font-medium">
+                  Haz clic para leer más →
+                </div>
               </div>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Modal - Vista detallada del dios */}
+      {/* Modal - Vista detallada */}
       {selectedGod && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
@@ -72,7 +88,7 @@ export const GlosarioDiosesView: React.FC = () => {
         >
           <div
             className="bg-white rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 shadow-2xl"
-            onClick={(e) => e.stopPropagation()} // Evita que el clic en el modal lo cierre
+            onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-start mb-4">
               <h2 className="text-3xl font-bold text-blue-800">{selectedGod.nombre}</h2>
@@ -84,17 +100,28 @@ export const GlosarioDiosesView: React.FC = () => {
               </button>
             </div>
 
-            <div className="space-y-3 text-gray-700">
-              <p><span className="font-semibold">Nombre egipcio:</span> {selectedGod.nombreEgipcio || 'No especificado'}</p>
-              <p><span className="font-semibold">Nombre griego/romano:</span> {selectedGod.nombreGrecoRomano || 'No especificado'}</p>
-              <p><span className="font-semibold">Divinidad griega:</span> {selectedGod.divinidadGriega || 'No especificado'}</p>
-              <p><span className="font-semibold">Representación:</span> {selectedGod.representacion || 'No especificado'}</p>
-              <div className="mt-4 pt-4 border-t border-gray-200">
-                <h3 className="font-bold text-lg text-blue-700 mb-2">📖 Sinopsis completa</h3>
-                <p className="text-gray-700 leading-relaxed text-justify">
-                  {selectedGod.sinopsis || 'Sinopsis no disponible'}
-                </p>
+            {/* Imagen en el modal */}
+            <div className="flex flex-col md:flex-row gap-6 mb-4">
+              <div className="flex-shrink-0">
+                <img
+                  src={getImageUrl(selectedGod.nombre)}
+                  alt={selectedGod.nombre}
+                  className="w-48 h-48 object-cover rounded-lg border border-gray-200"
+                />
               </div>
+              <div className="flex-1 space-y-3 text-gray-700">
+                <p><span className="font-semibold">Nombre egipcio:</span> {selectedGod.nombreEgipcio || 'No especificado'}</p>
+                <p><span className="font-semibold">Nombre griego/romano:</span> {selectedGod.nombreGrecoRomano || 'No especificado'}</p>
+                <p><span className="font-semibold">Divinidad griega:</span> {selectedGod.divinidadGriega || 'No especificado'}</p>
+                <p><span className="font-semibold">Representación:</span> {selectedGod.representacion || 'No especificado'}</p>
+              </div>
+            </div>
+
+            <div className="mt-4 pt-4 border-t border-gray-200">
+              <h3 className="font-bold text-lg text-blue-700 mb-2">📖 Sinopsis completa</h3>
+              <p className="text-gray-700 leading-relaxed text-justify">
+                {selectedGod.sinopsis || 'Sinopsis no disponible'}
+              </p>
             </div>
 
             <div className="mt-6 text-center">
@@ -111,5 +138,3 @@ export const GlosarioDiosesView: React.FC = () => {
     </div>
   );
 };
-
-export default GlosarioDiosesView;
