@@ -23,10 +23,9 @@ export const GlosarioDiosesView: React.FC = () => {
     setSelectedGod(null);
   };
 
-  // 🔑 FUNCIÓN PARA OBTENER LA IMAGEN DEL DIOS
+  // Función para obtener la imagen del dios
   const getImageUrl = (nombre: string): string => {
-    // Buscar la imagen en el mapeo, o usar una imagen por defecto
-    return imagenesDioses[nombre] || 'https://via.placeholder.com/150x150?text=Sin+imagen';
+    return imagenesDioses[nombre] || 'https://via.placeholder.com/200x200?text=Sin+imagen';
   };
 
   return (
@@ -47,12 +46,12 @@ export const GlosarioDiosesView: React.FC = () => {
             className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 hover:shadow-lg hover:border-blue-400 transition-all cursor-pointer flex flex-col"
           >
             <div className="flex p-4">
-              {/* Imagen a la izquierda */}
+              {/* Imagen a la izquierda - AHORA 200px */}
               <div className="flex-shrink-0 mr-4">
                 <img
                   src={getImageUrl(dios.nombre)}
                   alt={dios.nombre}
-                  className="w-24 h-24 object-cover rounded-lg border border-gray-200"
+                  className="w-32 h-32 object-contain rounded-lg border border-gray-200"
                 />
               </div>
               {/* Información a la derecha */}
@@ -100,13 +99,13 @@ export const GlosarioDiosesView: React.FC = () => {
               </button>
             </div>
 
-            {/* Imagen en el modal */}
+            {/* Imagen en el modal - AHORA 200px */}
             <div className="flex flex-col md:flex-row gap-6 mb-4">
               <div className="flex-shrink-0">
                 <img
                   src={getImageUrl(selectedGod.nombre)}
                   alt={selectedGod.nombre}
-                  className="w-48 h-48 object-cover rounded-lg border border-gray-200"
+                  className="w-48 h-48 object-contain rounded-lg border border-gray-200"
                 />
               </div>
               <div className="flex-1 space-y-3 text-gray-700">
