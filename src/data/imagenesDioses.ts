@@ -33,7 +33,7 @@ export const imagenesDioses: Record<string, string> = {
 "PAJET": "/images/dioses/pajet.gif",
 "PTAH": "/images/dioses/ptah.gif",
 "RA": "/images/dioses/ra.gif",
-"SATIS": "/images/dioses/satis.gif",
+"SOTIS": "/images/dioses/sotis.gif",
 "SESHAT": "/images/dioses/seshat.gif",
 "SETH": "/images/dioses/seth.gif",
 "TATENEN": "/images/dioses/tatenen.gif",
