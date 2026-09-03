@@ -11,7 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { TeacherCreateModal } from "@/components/TeacherCreateModal";
 import { LenguajeModuleView } from "@/components/LenguajeModuleView";
-import { HistoriaModuleView } from "@/components/HistoriaModuleView";
+import  HistoriaModuleView  from "@/components/HistoriaModuleView";
 import { MatematicasModuleView } from "@/components/MatematicasModuleView";
 
 interface SubjectViewProps {
