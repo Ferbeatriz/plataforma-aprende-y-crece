@@ -2,7 +2,12 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Landmark, ScrollText, Pyramid, BookOpen } from 'lucide-react';
 
-const HistoriaModuleView: React.FC = () => {
+// 👇 AGREGA LA INTERFACE Y LA PROP AQUÍ
+interface HistoriaModuleViewProps {
+  onEarnStars?: (stars: number) => void;
+}
+
+const HistoriaModuleView: React.FC<HistoriaModuleViewProps> = ({ onEarnStars }) => {
   const navigate = useNavigate();
 
   const civilizaciones = [
