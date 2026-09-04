@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { UserRole, SubjectId, LessonTopic, AchievementBadge, CuriosityFact } from "@/types";
 import { Navbar } from "@/components/Navbar";
 import { Sidebar, ActiveView } from "@/components/Sidebar";
-import { SubjectView } from "@/components/SubjectView";
 import { DashboardHome } from "@/components/DashboardHome";
 import { AchievementsView } from "@/components/AchievementsView";
 import { CuriositiesView } from "@/components/CuriositiesView";
@@ -10,8 +9,10 @@ import { ActivityModal } from "@/components/ActivityModal";
 import { MadeWithDyad } from "@/components/made-with-dyad";
 import { INITIAL_LESSONS, MOCK_ACHIEVEMENTS, CURIOSITIES } from "@/data/mockData";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom"; // 👈 IMPORTANTE: Agregar para navegar
 
 const Index: React.FC = () => {
+  const navigate = useNavigate(); // 👈 Hook para navegar a los módulos
   const [currentRole, setCurrentRole] = useState<UserRole>("student");
   const [selectedSubject, setSelectedSubject] = useState<SubjectId | null>(null);
   const [activeView, setActiveView] = useState<ActiveView>("dashboard");
@@ -28,6 +29,8 @@ const Index: React.FC = () => {
   const handleSelectSubject = (id: SubjectId) => {
     setSelectedSubject(id);
     setActiveView("subject");
+    // 👇 NUEVO: Navegar a la ruta específica del módulo en lugar de usar SubjectView
+    navigate(`/modulo/${id}`);
   };
 
   const handleNavigateHome = () => {
@@ -50,7 +53,6 @@ const Index: React.FC = () => {
   const handleEarnStars = (points: number) => {
     setTotalStars((prev) => {
       const newTotal = prev + points;
-      // Auto unlock badges if threshold met
       setAchievements((achList) =>
         achList.map((ach) => {
           if (newTotal >= ach.requiredStars && !ach.unlocked) {
@@ -101,15 +103,11 @@ const Index: React.FC = () => {
         {/* Dynamic Main View */}
         <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
           {activeView === "subject" && selectedSubject ? (
-            <SubjectView
-              subjectId={selectedSubject}
-              currentRole={currentRole}
-              lessons={lessons}
-              onBack={handleNavigateHome}
-              onStartLesson={handleStartLesson}
-              onCreateLesson={handleCreateLesson}
-              onEarnStars={handleEarnStars}
-            />
+            // 👇 ESTO YA NO USA SubjectView, redirige a la ruta
+            <div className="text-center py-20">
+              <p className="text-2xl">⏳</p>
+              <p className="text-gray-500 text-lg">Cargando módulo...</p>
+            </div>
           ) : activeView === "achievements" ? (
             <AchievementsView
               achievements={achievements}
