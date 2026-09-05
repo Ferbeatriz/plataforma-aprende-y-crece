@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 // 👇 IMPORTAMOS EL COMPONENTE GENÉRICO PARA LOS MÓDULOS
 import ModuloGenerico from "@/components/ModuloGenerico"; 
+import VistaAntiguoEgipto from "@/components/VistaAntiguoEgipto";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,12 @@ const App = () => (
           {/* 👇 RUTA PARA TODOS LOS MÓDULOS (Lenguaje, Historia, Matemáticas, etc.) */}
           <Route path="/modulo/:id" element={<ModuloGenerico />} />
           
+          {/* 👇 RUTA PARA EL ANTIGUO EGIPTO (Agrégala justo aquí) */}
+          <Route 
+            path="/modulo/historia/historia-universal/antiguo-egipto" 
+            element={<VistaAntiguoEgipto />} 
+          />
+
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
