@@ -25,7 +25,7 @@ const App = () => (
           
           {/* 👇 RUTA PARA EL ANTIGUO EGIPTO (Agrégala justo aquí) */}
           <Route 
-            path="/modulo/historia/historia-universal/antiguo-egipto" 
+            path="/modulo/historia/egipto" 
             element={<VistaAntiguoEgipto />} 
           />
 
