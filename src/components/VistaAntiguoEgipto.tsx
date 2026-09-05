@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Play, BookOpen, ListChecks, Trophy, Puzzle } from "lucide-react";
-import { antiguoEgipto } from "@/data/antiguoEgipto";
+import  antiguoEgipto  from "@/data/antiguoEgipto";
 
 const VistaAntiguoEgipto: React.FC = () => {
   const navigate = useNavigate();
