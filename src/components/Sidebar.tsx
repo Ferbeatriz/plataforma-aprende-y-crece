@@ -8,6 +8,8 @@ import {
   Compass,
   Trophy,
   Heart,
+  Languages,
+  Beaker,
 } from "lucide-react";
 import { SUBJECTS } from "@/data/subjects";
 
@@ -64,6 +66,28 @@ export const Sidebar: React.FC<SidebarProps> = ({
         active: "bg-indigo-100 text-indigo-700 shadow-sm border border-indigo-200 font-bold",
         idle: "text-purple-900/80 hover:bg-indigo-50/80 hover:text-indigo-600",
         iconBg: "bg-indigo-200 text-indigo-700",
+      },
+    },
+    {
+      id: "ingles" as SubjectId,
+      name: SUBJECTS.ingles.name,
+      icon: Languages,
+      badge: "5 temas",
+      colorClasses: {
+        active: "bg-sky-100 text-sky-700 shadow-sm border border-sky-200 font-bold",
+        idle: "text-purple-900/80 hover:bg-sky-50/80 hover:text-sky-600",
+        iconBg: "bg-sky-200 text-sky-700",
+      },
+    },
+    {
+      id: "ciencias" as SubjectId,
+      name: SUBJECTS.ciencias.name,
+      icon: Beaker,
+      badge: "6 temas",
+      colorClasses: {
+        active: "bg-green-100 text-green-800 shadow-sm border border-green-200 font-bold",
+        idle: "text-purple-900/80 hover:bg-green-50/80 hover:text-green-700",
+        iconBg: "bg-green-200 text-green-800",
       },
     },
   ];
